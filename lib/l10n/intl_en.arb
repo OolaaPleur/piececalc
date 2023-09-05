@@ -1,0 +1,71 @@
+{
+  "@@locale": "en",
+  "appName": "PieceCa(lc)",
+  "@appName": {
+    "description": "App name"
+  },
+  "profileBottomNavBarTitle": "Profile",
+  "@profileBottomNavBarTitle": {
+    "description": "Title for the profile section"
+  },
+  "homeBottomNavBarTitle": "Timeline",
+  "@homeBottomNavBarTitle": {
+    "description": "Title for the list section"
+  },
+  "settingsBottomNavBarTitle": "Settings",
+  "@settingsBottomNavBarTitle": {
+    "description": "Title for the settings section"
+  },
+  "addDoneWork": "Add done work",
+  "@addDoneWork": {
+    "description": "Text shown in add done work screen in appBar"
+  },
+  "workAmount": "Work amount",
+  "@workAmount": {
+    "description": "Text shown in add done work screen in appBar"
+  },
+  "settingsChangeTheme": "Change Theme",
+  "@settingsChangeTheme": {
+    "description": "Text shown on change theme toggle"
+  },
+  "addNewWork": "Add new work",
+  "@addNewWork": {
+    "description": "Text shown on add new work tile"
+  },
+  "backup": "Backup",
+  "@backup": {
+    "description": "Text shown on add new work tile"
+  },
+  "workName": "Work name",
+  "@workName": {
+    "description": "Text shown on page, where new work is added"
+  },
+  "pieceWork": "Piece work",
+  "@pieceWork": {
+    "description": "Text shown on page, where new work is added"
+  },
+  "hourWork": "Hour work",
+  "@hourWork": {
+    "description": "Text shown on page, where new work is added"
+  },
+  "priceForOnePiece": "Price for one piece",
+  "@priceForOnePiece": {
+    "description": "Text shown on page, where new work is added"
+  },
+  "priceForOneHour": "Price for one hour of work",
+  "@priceForOneHour": {
+    "description": "Text shown on page, where new work is added"
+  },
+  "january": "January",
+  "february": "February",
+  "march": "March",
+  "april": "April",
+  "may": "May",
+  "june": "June",
+  "july": "July",
+  "august": "August",
+  "september": "September",
+  "october": "October",
+  "november": "November",
+  "december": "December"
+}

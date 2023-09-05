@@ -1,0 +1,3 @@
+# piececalc
+
+Piecework calculator
