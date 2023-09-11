@@ -13,7 +13,7 @@ class WorkSummary extends Equatable {
   const WorkSummary({required this.amount, required this.combinedPrice});
 
   /// The total amount or units of work.
-  final double amount;
+  final String amount;
 
   /// The combined monetary value of the work.
   final double combinedPrice;

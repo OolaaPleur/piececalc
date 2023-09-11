@@ -1,0 +1,15 @@
+{
+  "et": [
+    "error",
+    "piececalc",
+    "selectTime",
+    "addNewField"
+  ],
+
+  "ru": [
+    "error",
+    "piececalc",
+    "selectTime",
+    "addNewField"
+  ]
+}

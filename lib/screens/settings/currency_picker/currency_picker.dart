@@ -1,6 +1,7 @@
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:piececalc/l10n/l10n.dart';
 import 'package:piececalc/screens/settings/currency_picker/currency_picker_cubit.dart';
 
 /// A widget that provides an interface for currency selection.
@@ -24,13 +25,13 @@ class CurrencyPicker extends StatelessWidget {
             },
           );
         },
-        title: const Text('change currency'),
+        title: Text(context.l10n.changeCurrency),
         subtitle: BlocConsumer<CurrencyPickerCubit, CurrencyPickerState>(
           listener: (context, state) {},
           builder: (context, state) {
             if (state is CurrencyLoaded) {
               if (state.currencyName['name'] == 'none picked') {
-                return const Text('None picked');
+                return Text(context.l10n.noneCurrencyPicked);
               }
               return Text('${state.currencyName['name']} - ${state.currencyName['symbol']}');
             }

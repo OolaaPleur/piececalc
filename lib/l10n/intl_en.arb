@@ -1,61 +1,21 @@
 {
   "@@locale": "en",
   "appName": "PieceCa(lc)",
-  "@appName": {
-    "description": "App name"
-  },
-  "profileBottomNavBarTitle": "Profile",
-  "@profileBottomNavBarTitle": {
-    "description": "Title for the profile section"
-  },
+  "statsBottomNavBarTitle": "Stats",
   "homeBottomNavBarTitle": "Timeline",
-  "@homeBottomNavBarTitle": {
-    "description": "Title for the list section"
-  },
   "settingsBottomNavBarTitle": "Settings",
-  "@settingsBottomNavBarTitle": {
-    "description": "Title for the settings section"
-  },
   "addDoneWork": "Add done work",
-  "@addDoneWork": {
-    "description": "Text shown in add done work screen in appBar"
-  },
   "workAmount": "Work amount",
-  "@workAmount": {
-    "description": "Text shown in add done work screen in appBar"
-  },
   "settingsChangeTheme": "Change Theme",
-  "@settingsChangeTheme": {
-    "description": "Text shown on change theme toggle"
-  },
   "addNewWork": "Add new work",
-  "@addNewWork": {
-    "description": "Text shown on add new work tile"
-  },
   "backup": "Backup",
-  "@backup": {
-    "description": "Text shown on add new work tile"
-  },
   "workName": "Work name",
-  "@workName": {
-    "description": "Text shown on page, where new work is added"
-  },
   "pieceWork": "Piece work",
-  "@pieceWork": {
-    "description": "Text shown on page, where new work is added"
-  },
   "hourWork": "Hour work",
-  "@hourWork": {
-    "description": "Text shown on page, where new work is added"
-  },
   "priceForOnePiece": "Price for one piece",
-  "@priceForOnePiece": {
-    "description": "Text shown on page, where new work is added"
-  },
   "priceForOneHour": "Price for one hour of work",
-  "@priceForOneHour": {
-    "description": "Text shown on page, where new work is added"
-  },
+
+  "@_MONTHS": {},
   "january": "January",
   "february": "February",
   "march": "March",
@@ -67,5 +27,67 @@
   "september": "September",
   "october": "October",
   "november": "November",
-  "december": "December"
+  "december": "December",
+
+  "@_DAYS_OF_WEEK": {},
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+
+  "@_ERRORS": {},
+  "somethingWentWrong": "Something went wrong. PLease try again.",
+
+  "editTask": "Edit task",
+  "pleaseEnterDate": "Please enter date",
+  "enterDate": "Enter Date",
+  "pleaseEnterWorkName": "Please enter work name",
+  "pleaseEnterValidWorkName": "Please enter valid work name",
+  "pleaseEnterAnAmount": "Please enter an amount",
+  "pleaseEnterAValidNumber": "Please enter a valid number",
+  "deleteTask": "Delete",
+  "removeField": "Remove field",
+  "noWorkHasBeenAdded": "No work has been added. To add new work \n1) Go to Settings \n2) Click 'Add new work'",
+  "orPressThisButton": "Or press this button",
+  "tasksNotAddedYet": "Tasks not added yet, press plus button at the bottom right",
+  "earned": "Earned",
+  "amount": "Amount",
+  "noneCurrencyPicked": "None picked",
+  "changeCurrency": "Change currency",
+  "workDeleted": "Work deleted",
+  "workIsAlreadyUsedInTaskCantDelete": "Work is already used in task. Cant Delete",
+  "pleaseEnterAPrice": "Please enter a price",
+  "save": "Save",
+  "addWorksInSettings": "Add works in settings",
+  "tapToAddTask": "Tap to add task",
+
+  "@_LANGUAGE": {},
+
+  "english": "English",
+  "russian": "Russian",
+  "estonian": "Estonian",
+  "changeLanguage": "Change language",
+
+  "noDataForThisMonth": "No data for this month is found",
+  "shareMonthData": "Share month data",
+  "timeSpent": "Time spent",
+  "timeIsNotPicked": "Time is not picked",
+  "yes": "Yes",
+  "no": "No",
+  "taskDeletion": "Task deletion",
+  "wouldYouLikeToDeleteThisTask": "Would you like to delete this task?",
+  "workDeletion": "Work deletion",
+  "wouldYouLikeToDeleteThisWork": "Would you like to delete this work?",
+  "emailToMe": "Email to me!",
+  "invalidFormat": "Invalid Format",
+  "error": "Error",
+  "piececalc": "PieceCa(lc)",
+  "selectTime": "Select Time",
+
+  "hoursOnly": "{count, plural, =0{0 hours} =1{1 hour} other{{count} hours}}",
+  "minutesOnly": "{count, plural, =0{0 minutes} =1{1 minute} other{{count} minutes}}",
+  "addNewField": "Add new field"
 }

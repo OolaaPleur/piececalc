@@ -77,7 +77,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(WorkDoneLengthMoreThanZero());
       }
     } catch (error) {
-      log.log(Level.WARNING, 'error.toString()');
+      log.log(Level.WARNING, error.toString());
       emit(WorkDoneError(error.toString()));
     }
   }

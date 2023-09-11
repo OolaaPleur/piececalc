@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
 import '../../../theme/bloc/theme_bloc.dart';
+import '../../../theme/theme_constants.dart';
 
 /// Widget dropdown in Settings, changes theme of an app.
 class DarkModeSwitch extends StatelessWidget {
@@ -19,9 +20,9 @@ class DarkModeSwitch extends StatelessWidget {
             key: const Key('dark_mode_switcher'),
             title: Row(
               children: [
-                const Icon(Icons.brightness_6),
-                const SizedBox(
-                  width: 10,
+                const Padding(
+                  padding: EdgeInsets.only(right: iconPadding),
+                  child: Icon(Icons.brightness_6),
                 ),
                 Text(
                   context.l10n.settingsChangeTheme,

@@ -38,18 +38,18 @@ class TaskEditorInitial extends TaskEditorState {}
 class TaskSaved extends TaskEditorState {}
 
 /// State when the work details are loaded.
-class WorksLoadedRefactorNextTime extends TaskEditorState {
-  /// Creates a [WorksLoadedRefactorNextTime] state with the provided [workData].
-  WorksLoadedRefactorNextTime(this.workData);
+class TaskEditorWorksLoaded extends TaskEditorState {
+  /// Creates a [TaskEditorWorksLoaded] state with the provided [workData].
+  TaskEditorWorksLoaded(this.workData);
 
   /// The loaded work details.
   final List<Work> workData;
 }
 
 /// State when there's an error in any operation in the task editor.
-class WorkDoneError extends TaskEditorState {
-  /// Creates a [WorkDoneError] state with a specific error [message].
-  WorkDoneError(this.message);
+class TaskEditorError extends TaskEditorState {
+  /// Creates a [TaskEditorError] state with a specific error [message].
+  TaskEditorError(this.message);
 
   /// Message describing the error.
   final String message;
@@ -68,19 +68,19 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
   final WorkRepository _workRepository;
 
   Future<void> _loadWorks(LoadWorkEvent event, Emitter<TaskEditorState> emit) async {
-    final log = Logger('LoadWorkEvent_loadData');
+    final log = Logger('LoadWorkEvent_loadWorks');
     try {
       final savedWorks = await _workRepository.loadWorks();
-      emit(WorksLoadedRefactorNextTime(savedWorks));
+      emit(TaskEditorWorksLoaded(savedWorks));
     } catch (error) {
-      log.log(Level.WARNING, 'error.toString()');
-      emit(WorkDoneError(error.toString()));
+      log.log(Level.WARNING, error.toString());
+      emit(TaskEditorError(error.toString()));
     }
   }
 
   Future<void> _saveTask(SaveTaskEvent event, Emitter<TaskEditorState> emit) async {
     final db = await DatabaseOperations.openAppDatabaseAndCreateTables('piececalc');
-    final log = Logger('SaveTaskEvent_loadData');
+    final log = Logger('SaveTaskEvent_saveTask');
     try {
       if (event.isEditing) {
         await db.update(
@@ -94,14 +94,13 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
       }
       emit(TaskSaved());
     } catch (error) {
-      log.log(Level.WARNING, 'error.toString()');
+      log.log(Level.WARNING, error.toString());
       emit(
-        WorkDoneError(
+        TaskEditorError(
           error.toString(),
         ),
       );
     } finally {
-      //await DatabaseOperations.closeDatabase(db);
       emit(TaskEditorInitial());
     }
   }

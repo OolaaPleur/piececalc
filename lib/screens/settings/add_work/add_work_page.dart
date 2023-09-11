@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
-import 'package:uuid/uuid.dart';
+import 'package:piececalc/screens/settings/add_work/helpers.dart';
+import 'package:piececalc/widgets/snackbar.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../data/models/work.dart';
+import '../../../theme/theme_constants.dart';
 import 'add_work_cubit.dart';
 
 /// Page, where city could be selected by user.
@@ -25,12 +27,12 @@ class _AddWorkPageState extends State<AddWorkPage> {
   @override
   void initState() {
     if (widget.editedObject != null) {
-      final edWorkType = widget.editedObject!.paymentType == 'pieceWork'
+      final edWorkType = widget.editedObject!.paymentType == 'piecewisePayment'
           ? PaymentType.piecewisePayment
           : PaymentType.hourlyPayment;
       workType = widget.editedObject == null ? PaymentType.piecewisePayment : edWorkType;
       workNameController.text = widget.editedObject!.workName;
-      priceController.text = widget.editedObject!.price;
+      priceController.text = widget.editedObject!.price.toString();
     }
     super.initState();
   }
@@ -39,30 +41,6 @@ class _AddWorkPageState extends State<AddWorkPage> {
   final TextEditingController workNameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
 
-  Map<String, dynamic> toMap() {
-    if (widget.editedObject != null) {
-      final priceWithDot = priceController.text.trim().replaceAll(',', '.');
-      final data = <String, dynamic>{
-        'id': widget.editedObject!.id,
-        'workName': workNameController.text.trim(),
-        'workType': workType == PaymentType.piecewisePayment ? 'pieceWork' : 'hourWork',
-        'price': priceWithDot,
-      };
-      return data;
-    } else {
-      const uuid = Uuid();
-      final uniqueKey = uuid.v1();
-      final priceWithDot = priceController.text.trim().replaceAll(',', '.');
-      final data = <String, dynamic>{
-        'id': uniqueKey,
-        'workName': workNameController.text.trim(),
-        'workType': workType == PaymentType.piecewisePayment ? 'pieceWork' : 'hourWork',
-        'price': priceWithDot,
-      };
-      return data;
-    }
-  }
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -70,10 +48,17 @@ class _AddWorkPageState extends State<AddWorkPage> {
     return BlocListener<AddWorkCubit, AddWorkState>(
       listener: (context, state) {
         if (state is WorkDeleted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('deleted')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(AppSnackBar(context, message: context.l10n.workDeleted).showSnackBar());
         }
         if (state is WorkCantBeDeleted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('cant delete')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            AppSnackBar(context, message: context.l10n.workIsAlreadyUsedInTaskCantDelete)
+                .showSnackBar(),
+          );
+        }
+        if (state is WorkCanBeDeleted) {
+          showAlertDialog(context, state.workToDelete);
         }
         if (state is WorkSaved && widget.editedObject != null) {
           Navigator.pop(context);
@@ -99,7 +84,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                         decoration: InputDecoration(labelText: context.l10n.workName),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter work name';
+                            return context.l10n.pleaseEnterWorkName;
                           }
                           return null;
                         },
@@ -144,10 +129,10 @@ class _AddWorkPageState extends State<AddWorkPage> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter a price';
+                            return context.l10n.pleaseEnterAPrice;
                           }
                           if (!numericPattern.hasMatch(value)) {
-                            return 'Please enter a valid number';
+                            return context.l10n.pleaseEnterAValidNumber;
                           }
                           return null;
                         },
@@ -157,22 +142,29 @@ class _AddWorkPageState extends State<AddWorkPage> {
                       builder: (context) {
                         return ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: saveButtonHorizontalPadding, vertical: saveButtonVerticalPadding),
                           ),
                           onPressed: () {
                             FocusScope.of(context).unfocus();
 
                             if (_formKey.currentState!.validate()) {
                               // Check if form is valid
-                              final dataToSave = toMap();
+                              final dataToSave = AddWorkHelpers.convertTextFieldsDataToWork(
+                                editedObject: widget.editedObject,
+                                workName: workNameController.text.trim(),
+                                workType: workType,
+                                priceController: priceController,
+                              );
                               if (widget.editedObject == null) {
                                 context.read<AddWorkCubit>().saveData(dataToSave);
                               } else {
                                 context.read<AddWorkCubit>().saveData(dataToSave, isEditing: true);
                               }
+                              workNameController.text = '';
+                              priceController.text = '';
                             }
                           },
-                          child: const Text('Save'),
+                          child: Text(context.l10n.save),
                         );
                       },
                     ),
@@ -182,11 +174,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
               if (widget.editedObject == null)
                 BlocBuilder<AddWorkCubit, AddWorkState>(
                   buildWhen: (previous, current) {
-                    return current is! WorkDeleted &&
-                        current is! WorkDeleting &&
-                        current is! WorksLoading &&
-                        current is! WorkSaving &&
-                        current is! WorkSaved;
+                    return current is WorksLoaded;
                   },
                   builder: (context, state) {
                     if (state is WorksLoaded) {
@@ -210,15 +198,18 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text('price: ${state.workData[index].price}'),
+                                Text('${context.l10n.earned}: ${state.workData[index].price}'),
                                 const Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                                 IconButton(
                                   onPressed: () {
-                                    context.read<AddWorkCubit>().deleteWork(state.workData[index]);
+                                    context
+                                        .read<AddWorkCubit>()
+                                        .checkDeletionPossibility(state.workData[index]);
+                                    //
                                   },
                                   icon: Icon(
                                     Icons.delete,
-                                    size: 30,
+                                    size: deleteIconSize,
                                     color: Theme.of(context).colorScheme.error,
                                   ),
                                 ),
@@ -237,6 +228,41 @@ class _AddWorkPageState extends State<AddWorkPage> {
           ),
         ),
       ),
+    );
+  }
+
+  void showAlertDialog(BuildContext context, Work work) {
+    // set up the buttons
+    final Widget cancelButton = TextButton(
+      child: Text(context.l10n.yes),
+      onPressed: () {
+        context.read<AddWorkCubit>().deleteWork(work);
+        Navigator.pop(context);
+      },
+    );
+    final Widget continueButton = TextButton(
+      child: Text(context.l10n.no),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    final alert = AlertDialog(
+      title: Text(context.l10n.workDeletion),
+      content: Text(context.l10n.wouldYouLikeToDeleteThisWork),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

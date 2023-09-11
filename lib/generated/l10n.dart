@@ -52,17 +52,17 @@ class S {
     return Intl.message(
       'PieceCa(lc)',
       name: 'appName',
-      desc: 'App name',
+      desc: '',
       args: [],
     );
   }
 
-  /// `Profile`
-  String get profileBottomNavBarTitle {
+  /// `Stats`
+  String get statsBottomNavBarTitle {
     return Intl.message(
-      'Profile',
-      name: 'profileBottomNavBarTitle',
-      desc: 'Title for the profile section',
+      'Stats',
+      name: 'statsBottomNavBarTitle',
+      desc: '',
       args: [],
     );
   }
@@ -72,7 +72,7 @@ class S {
     return Intl.message(
       'Timeline',
       name: 'homeBottomNavBarTitle',
-      desc: 'Title for the list section',
+      desc: '',
       args: [],
     );
   }
@@ -82,7 +82,7 @@ class S {
     return Intl.message(
       'Settings',
       name: 'settingsBottomNavBarTitle',
-      desc: 'Title for the settings section',
+      desc: '',
       args: [],
     );
   }
@@ -92,7 +92,7 @@ class S {
     return Intl.message(
       'Add done work',
       name: 'addDoneWork',
-      desc: 'Text shown in add done work screen in appBar',
+      desc: '',
       args: [],
     );
   }
@@ -102,7 +102,7 @@ class S {
     return Intl.message(
       'Work amount',
       name: 'workAmount',
-      desc: 'Text shown in add done work screen in appBar',
+      desc: '',
       args: [],
     );
   }
@@ -112,7 +112,7 @@ class S {
     return Intl.message(
       'Change Theme',
       name: 'settingsChangeTheme',
-      desc: 'Text shown on change theme toggle',
+      desc: '',
       args: [],
     );
   }
@@ -122,7 +122,7 @@ class S {
     return Intl.message(
       'Add new work',
       name: 'addNewWork',
-      desc: 'Text shown on add new work tile',
+      desc: '',
       args: [],
     );
   }
@@ -132,7 +132,7 @@ class S {
     return Intl.message(
       'Backup',
       name: 'backup',
-      desc: 'Text shown on add new work tile',
+      desc: '',
       args: [],
     );
   }
@@ -142,7 +142,7 @@ class S {
     return Intl.message(
       'Work name',
       name: 'workName',
-      desc: 'Text shown on page, where new work is added',
+      desc: '',
       args: [],
     );
   }
@@ -152,7 +152,7 @@ class S {
     return Intl.message(
       'Piece work',
       name: 'pieceWork',
-      desc: 'Text shown on page, where new work is added',
+      desc: '',
       args: [],
     );
   }
@@ -162,7 +162,7 @@ class S {
     return Intl.message(
       'Hour work',
       name: 'hourWork',
-      desc: 'Text shown on page, where new work is added',
+      desc: '',
       args: [],
     );
   }
@@ -172,7 +172,7 @@ class S {
     return Intl.message(
       'Price for one piece',
       name: 'priceForOnePiece',
-      desc: 'Text shown on page, where new work is added',
+      desc: '',
       args: [],
     );
   }
@@ -182,7 +182,7 @@ class S {
     return Intl.message(
       'Price for one hour of work',
       name: 'priceForOneHour',
-      desc: 'Text shown on page, where new work is added',
+      desc: '',
       args: [],
     );
   }
@@ -306,6 +306,532 @@ class S {
       args: [],
     );
   }
+
+  /// `Monday`
+  String get monday {
+    return Intl.message(
+      'Monday',
+      name: 'monday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tuesday`
+  String get tuesday {
+    return Intl.message(
+      'Tuesday',
+      name: 'tuesday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wednesday`
+  String get wednesday {
+    return Intl.message(
+      'Wednesday',
+      name: 'wednesday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thursday`
+  String get thursday {
+    return Intl.message(
+      'Thursday',
+      name: 'thursday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Friday`
+  String get friday {
+    return Intl.message(
+      'Friday',
+      name: 'friday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saturday`
+  String get saturday {
+    return Intl.message(
+      'Saturday',
+      name: 'saturday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sunday`
+  String get sunday {
+    return Intl.message(
+      'Sunday',
+      name: 'sunday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong. PLease try again.`
+  String get somethingWentWrong {
+    return Intl.message(
+      'Something went wrong. PLease try again.',
+      name: 'somethingWentWrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit task`
+  String get editTask {
+    return Intl.message(
+      'Edit task',
+      name: 'editTask',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter date`
+  String get pleaseEnterDate {
+    return Intl.message(
+      'Please enter date',
+      name: 'pleaseEnterDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter Date`
+  String get enterDate {
+    return Intl.message(
+      'Enter Date',
+      name: 'enterDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter work name`
+  String get pleaseEnterWorkName {
+    return Intl.message(
+      'Please enter work name',
+      name: 'pleaseEnterWorkName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter valid work name`
+  String get pleaseEnterValidWorkName {
+    return Intl.message(
+      'Please enter valid work name',
+      name: 'pleaseEnterValidWorkName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter an amount`
+  String get pleaseEnterAnAmount {
+    return Intl.message(
+      'Please enter an amount',
+      name: 'pleaseEnterAnAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid number`
+  String get pleaseEnterAValidNumber {
+    return Intl.message(
+      'Please enter a valid number',
+      name: 'pleaseEnterAValidNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get deleteTask {
+    return Intl.message(
+      'Delete',
+      name: 'deleteTask',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove field`
+  String get removeField {
+    return Intl.message(
+      'Remove field',
+      name: 'removeField',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No work has been added. To add new work \n1) Go to Settings \n2) Click 'Add new work'`
+  String get noWorkHasBeenAdded {
+    return Intl.message(
+      'No work has been added. To add new work \n1) Go to Settings \n2) Click \'Add new work\'',
+      name: 'noWorkHasBeenAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Or press this button`
+  String get orPressThisButton {
+    return Intl.message(
+      'Or press this button',
+      name: 'orPressThisButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tasks not added yet, press plus button at the bottom right`
+  String get tasksNotAddedYet {
+    return Intl.message(
+      'Tasks not added yet, press plus button at the bottom right',
+      name: 'tasksNotAddedYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Earned`
+  String get earned {
+    return Intl.message(
+      'Earned',
+      name: 'earned',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount {
+    return Intl.message(
+      'Amount',
+      name: 'amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `None picked`
+  String get noneCurrencyPicked {
+    return Intl.message(
+      'None picked',
+      name: 'noneCurrencyPicked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change currency`
+  String get changeCurrency {
+    return Intl.message(
+      'Change currency',
+      name: 'changeCurrency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work deleted`
+  String get workDeleted {
+    return Intl.message(
+      'Work deleted',
+      name: 'workDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work is already used in task. Cant Delete`
+  String get workIsAlreadyUsedInTaskCantDelete {
+    return Intl.message(
+      'Work is already used in task. Cant Delete',
+      name: 'workIsAlreadyUsedInTaskCantDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a price`
+  String get pleaseEnterAPrice {
+    return Intl.message(
+      'Please enter a price',
+      name: 'pleaseEnterAPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add works in settings`
+  String get addWorksInSettings {
+    return Intl.message(
+      'Add works in settings',
+      name: 'addWorksInSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap to add task`
+  String get tapToAddTask {
+    return Intl.message(
+      'Tap to add task',
+      name: 'tapToAddTask',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get english {
+    return Intl.message(
+      'English',
+      name: 'english',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Russian`
+  String get russian {
+    return Intl.message(
+      'Russian',
+      name: 'russian',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Estonian`
+  String get estonian {
+    return Intl.message(
+      'Estonian',
+      name: 'estonian',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change language`
+  String get changeLanguage {
+    return Intl.message(
+      'Change language',
+      name: 'changeLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No data for this month is found`
+  String get noDataForThisMonth {
+    return Intl.message(
+      'No data for this month is found',
+      name: 'noDataForThisMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share month data`
+  String get shareMonthData {
+    return Intl.message(
+      'Share month data',
+      name: 'shareMonthData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time spent`
+  String get timeSpent {
+    return Intl.message(
+      'Time spent',
+      name: 'timeSpent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time is not picked`
+  String get timeIsNotPicked {
+    return Intl.message(
+      'Time is not picked',
+      name: 'timeIsNotPicked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Task deletion`
+  String get taskDeletion {
+    return Intl.message(
+      'Task deletion',
+      name: 'taskDeletion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Would you like to delete this task?`
+  String get wouldYouLikeToDeleteThisTask {
+    return Intl.message(
+      'Would you like to delete this task?',
+      name: 'wouldYouLikeToDeleteThisTask',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work deletion`
+  String get workDeletion {
+    return Intl.message(
+      'Work deletion',
+      name: 'workDeletion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Would you like to delete this work?`
+  String get wouldYouLikeToDeleteThisWork {
+    return Intl.message(
+      'Would you like to delete this work?',
+      name: 'wouldYouLikeToDeleteThisWork',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email to me!`
+  String get emailToMe {
+    return Intl.message(
+      'Email to me!',
+      name: 'emailToMe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid Format`
+  String get invalidFormat {
+    return Intl.message(
+      'Invalid Format',
+      name: 'invalidFormat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error`
+  String get error {
+    return Intl.message(
+      'Error',
+      name: 'error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PieceCa(lc)`
+  String get piececalc {
+    return Intl.message(
+      'PieceCa(lc)',
+      name: 'piececalc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Time`
+  String get selectTime {
+    return Intl.message(
+      'Select Time',
+      name: 'selectTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{0 hours} =1{1 hour} other{{count} hours}}`
+  String hoursOnly(num count) {
+    return Intl.plural(
+      count,
+      zero: '0 hours',
+      one: '1 hour',
+      other: '$count hours',
+      name: 'hoursOnly',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =0{0 minutes} =1{1 minute} other{{count} minutes}}`
+  String minutesOnly(num count) {
+    return Intl.plural(
+      count,
+      zero: '0 minutes',
+      one: '1 minute',
+      other: '$count minutes',
+      name: 'minutesOnly',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Add new field`
+  String get addNewField {
+    return Intl.message(
+      'Add new field',
+      name: 'addNewField',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -314,6 +840,8 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'et'),
+      Locale.fromSubtags(languageCode: 'ru'),
     ];
   }
 

@@ -53,6 +53,17 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
+    flavorDimensions "app"
+    productFlavors {
+        development {
+            dimension "app"
+            applicationIdSuffix ".dev"
+            manifestPlaceholders = [appName: "[DEV] PieceCa(lc)"]
+        }
+        production {
+            dimension "app"
+        }
+    }
 
     buildTypes {
         release {

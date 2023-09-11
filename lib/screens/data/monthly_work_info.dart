@@ -4,6 +4,8 @@ import 'package:piececalc/l10n/l10n.dart';
 import 'package:piececalc/screens/settings/currency_picker/currency_picker_cubit.dart';
 
 import '../../constants/constants.dart';
+import '../../theme/theme_constants.dart';
+import '../../utils/helpers.dart';
 import 'monthly_work_info_cubit.dart';
 
 /// Represents a page that displays work-related information segmented by months.
@@ -22,6 +24,20 @@ class MonthlyWorkInfo extends StatefulWidget {
 class _MonthlyWorkInfoState extends State<MonthlyWorkInfo> {
   DateTime currentDate = DateTime.now();
 
+  void goToNextMonth(BuildContext context) {
+    setState(() {
+      currentDate = DateTime(currentDate.year, currentDate.month + 1);
+    });
+    context.read<MonthlyWorkInfoCubit>().loadData(month: currentDate.month, year: currentDate.year);
+  }
+
+  void goToPreviousMonth(BuildContext context) {
+    setState(() {
+      currentDate = DateTime(currentDate.year, currentDate.month - 1);
+    });
+    context.read<MonthlyWorkInfoCubit>().loadData(month: currentDate.month, year: currentDate.year);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,31 +47,18 @@ class _MonthlyWorkInfoState extends State<MonthlyWorkInfo> {
           children: [
             IconButton(
               icon: const Icon(Icons.arrow_left),
-              onPressed: () {
-                setState(() {
-                  currentDate = DateTime(currentDate.year, currentDate.month - 1);
-                });
-                context
-                    .read<MonthlyWorkInfoCubit>()
-                    .loadData(month: currentDate.month, year: currentDate.year);
-              },
+              onPressed: () => goToPreviousMonth(context),
             ),
             Text(
-              '${monthToLocalKey[Month.values[currentDate.month - 1]]!(context.l10n)} ${currentDate.year}',
+              '${monthToLocalKey[Month.values[currentDate.month - 1]]!(context.l10n, 0)} ${currentDate.year}',
+              style: TextStyle(fontSize: Theme.of(context).textTheme.titleMedium!.fontSize),
             ),
             IconButton(
               icon: const Icon(Icons.arrow_right),
               onPressed: currentDate.month == DateTime.now().month &&
                       currentDate.year == DateTime.now().year
                   ? null
-                  : () {
-                      setState(() {
-                        currentDate = DateTime(currentDate.year, currentDate.month + 1);
-                      });
-                      context
-                          .read<MonthlyWorkInfoCubit>()
-                          .loadData(month: currentDate.month, year: currentDate.year);
-                    },
+                  : () => goToNextMonth(context),
             ),
           ],
         ),
@@ -65,6 +68,21 @@ class _MonthlyWorkInfoState extends State<MonthlyWorkInfo> {
               if (monthlyWorkInfoState is Loading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (monthlyWorkInfoState is DataLoaded) {
+                if (monthlyWorkInfoState.workData.isEmpty) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 100,
+                        child: ClipOval(child: Image.asset('assets/chart.png')),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: appInfoPadding),
+                        child: Text(context.l10n.noDataForThisMonth),
+                      ),
+                    ],
+                  );
+                }
                 return Column(
                   children: [
                     Expanded(
@@ -74,18 +92,40 @@ class _MonthlyWorkInfoState extends State<MonthlyWorkInfo> {
                           final entry = monthlyWorkInfoState.workData.entries.elementAt(index);
                           final work = entry.key;
                           final workSummary = entry.value;
+
                           return ListTile(
-                            title: Text(work.workName),
-                            subtitle: Text('${workSummary.amount}'),
+                            title: Text(
+                              work.workName,
+                              style: TextStyle(
+                                fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
+                              ),
+                            ),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.only(top: iconPadding),
+                              child: work.paymentType ==
+                                      PaymentType.piecewisePayment.toString().split('.').last
+                                  ? Text(
+                                      '${context.l10n.amount}: ${Helpers.formatNumber(double.parse(workSummary.amount))}',
+                                      style: TextStyle(
+                                        fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+                                      ),
+                                    )
+                                  : Text(
+                                      '${context.l10n.timeSpent}: ${Helpers.formatDuration(workSummary.amount, context)}',
+                                      style: TextStyle(
+                                        fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+                                      ),
+                                    ),
+                            ),
                             trailing: BlocBuilder<CurrencyPickerCubit, CurrencyPickerState>(
                               builder: (context, currencyPickerState) {
-                                if (currencyPickerState is CurrencyLoaded) {
-                                  return Text(
-                                    '${workSummary.combinedPrice}${currencyPickerState.currencyName['symbol']}',
-                                  );
-                                } else {
-                                  return Text('${workSummary.combinedPrice}');
-                                }
+                                return Text(
+                                  '${context.l10n.earned}: ${Helpers.formatNumber(workSummary.combinedPrice)}${currencyPickerState.currencyName['symbol']}',
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+                                  ),
+                                );
                               },
                             ),
                           );
@@ -95,9 +135,9 @@ class _MonthlyWorkInfoState extends State<MonthlyWorkInfo> {
                   ],
                 );
               } else if (monthlyWorkInfoState is DataError) {
-                return Center(child: Text('Error: ${monthlyWorkInfoState.error}'));
+                return Center(child: Text(context.l10n.somethingWentWrong));
               }
-              return const SizedBox.shrink(); // Fallback for unhandled states, if any
+              return const SizedBox.shrink();
             },
           ),
         ),

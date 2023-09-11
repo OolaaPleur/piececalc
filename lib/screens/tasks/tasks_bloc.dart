@@ -1,9 +1,12 @@
 // ignore_for_file: avoid_dynamic_calls
 import 'package:bloc/bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:logging/logging.dart';
 import 'package:piececalc/data/models/completed_task.dart';
 
+import '../../data/datasources/work_data_source.dart';
 import '../../data/models/composite_task_info.dart';
-import '../../data/models/work.dart';
+import '../../data/repositories/work_repository.dart';
 import '../../utils/database/database_operations.dart';
 
 /// An abstract representation of the different states the 'Tasks' page can be in.
@@ -33,9 +36,9 @@ class TaskDeleted extends TasksState {}
 
 /// Represents an error state for the tasks, capturing any errors that might have occurred.
 class TasksError extends TasksState {
-
   /// Creates a [TasksError] state with the provided error message.
   TasksError(this.error);
+
   /// [error] contains a descriptive error message detailing the nature of the error.
   final String error;
 }
@@ -44,9 +47,12 @@ class TasksError extends TasksState {
 ///
 /// Responsible for loading tasks, handling task deletions, and managing any errors.
 class TasksCubit extends Cubit<TasksState> {
-
   /// Initializes the [TasksCubit] with the [TasksInitial] state.
-  TasksCubit() : super(TasksInitial());
+  TasksCubit()
+      : _workRepository = GetIt.I<WorkDataSource>(),
+        super(TasksInitial());
+
+  final WorkRepository _workRepository;
 
   /// Asynchronously loads the tasks data.
   ///
@@ -54,6 +60,7 @@ class TasksCubit extends Cubit<TasksState> {
   /// updates the state accordingly, either to [TasksLoaded]
   /// on success or [TasksError] on failure.
   Future<void> loadData() async {
+    final log = Logger('TasksCubit_loadData');
     emit(TasksLoading());
     final db = await DatabaseOperations.openAppDatabaseAndCreateTables('piececalc');
     try {
@@ -61,8 +68,7 @@ class TasksCubit extends Cubit<TasksState> {
       final List<Map<String, dynamic>> doneWorksResult = await db.query('done_works');
       final doneWorks = doneWorksResult.map(CompletedTask.fromJson).toList();
       // Fetch all rows from the 'works' table
-      final List<Map<String, dynamic>> allWorksResult = await db.query('works');
-      final allWorks = allWorksResult.map(Work.fromJson).toList();
+      final allWorks = await _workRepository.loadWorks();
       // Create a list of CompositeTaskInfo by combining TaskDone and Work based on workId
       final completedTasks = doneWorks.map((doneWork) {
         final correspondingWork = allWorks.firstWhere((work) => work.id == doneWork.workId);
@@ -91,10 +97,11 @@ class TasksCubit extends Cubit<TasksState> {
 
       emit(TasksLoaded(sortedGroupedByDate));
     } catch (error) {
-      // Handle the database error. This could be logging the error, emitting an error state, etc.
-      emit(TasksError(error.toString())); // Assuming you have an ErrorState or something similar.
+      log.log(Level.WARNING, error.toString());
+      emit(TasksError(error.toString()));
     }
   }
+
   /// Deletes task.
   ///
   /// This method deletes task from a data source and
@@ -105,6 +112,7 @@ class TasksCubit extends Cubit<TasksState> {
     Map<String, List<CompositeTaskInfo>> groupedByDate,
     CompositeTaskInfo compositeTaskInfo,
   ) async {
+    final log = Logger('TasksCubit_deleteTask');
     final db = await DatabaseOperations.openAppDatabaseAndCreateTables('piececalc');
 
     try {
@@ -138,10 +146,10 @@ class TasksCubit extends Cubit<TasksState> {
       emit(TaskDeleted());
       emit(TasksLoaded(groupedByDate));
     } catch (error) {
-      // Handle the database error. This could be logging the error, emitting an error state, etc.
+      log.log(Level.WARNING, error.toString());
       emit(
         TasksError(error.toString()),
-      ); // Assuming you have an ErrorState or similar to emit errors.
+      );
     }
   }
 }

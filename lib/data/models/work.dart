@@ -17,7 +17,7 @@ class Work extends Equatable {
       id: json['id'].toString(),
       workName: json['workName'].toString(),
       paymentType: json['workType'].toString(),
-      price: json['price'].toString(),
+      price: double.tryParse(json['price'].toString()) ?? 0.0,
     );
   }
   /// Unique identifier for the work.
@@ -30,7 +30,7 @@ class Work extends Equatable {
   final String paymentType;
 
   /// Price associated with the work.
-  final String price;
+  final double price;
   /// Converts the [Work] instance into a JSON map.
   Map<String, dynamic> toJson() {
     return {

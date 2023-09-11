@@ -20,8 +20,11 @@ class TextFieldGroup {
   /// Focus node to manage focus behavior for the amount field.
   FocusNode amountFocusNode = FocusNode();
 
-  /// Unique key to uniquely identify the widget tree for this text field group.
-  UniqueKey uniqueKey = UniqueKey();
+  /// Global key to uniquely identify the widget tree for this text field group.
+  GlobalKey<FormFieldState<String>> globalKey = GlobalKey<FormFieldState<String>>();
+
+  /// [TimeOfDay] object, stores user inputted time.
+  TimeOfDay time = const TimeOfDay(hour: 0, minute: 0);
 
   /// The associated [Work] data that matches with the input from the type-ahead work-related
   /// text field.

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../screens/data/monthly_work_info_cubit.dart';
-import '../screens/home/add_done_work/task_editor_bloc.dart';
 import '../screens/home/home.dart';
 import '../screens/home/home_bloc.dart';
+import '../screens/home/task_editor/task_editor_bloc.dart';
 import '../screens/settings/add_work/add_work_cubit.dart';
 import '../screens/settings/currency_picker/currency_picker_cubit.dart';
 import '../screens/settings/language_change/language_cubit.dart';

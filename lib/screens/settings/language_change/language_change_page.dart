@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:piececalc/constants/constants.dart';
+import 'package:piececalc/l10n/l10n.dart';
 import 'package:piececalc/screens/settings/language_change/language_cubit.dart';
 
 /// A page that provides a user interface to change the application's language.
@@ -8,7 +10,6 @@ import 'package:piececalc/screens/settings/language_change/language_cubit.dart';
 /// from the available options. After a language is selected, it is expected
 /// that the application will reflect the change.
 class LanguageChangePage extends StatelessWidget {
-
   /// Creates a [LanguageChangePage] widget.
   ///
   /// The [key] parameter is optional and is forwarded to the parent class.
@@ -16,29 +17,36 @@ class LanguageChangePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLanguage = context.read<LanguageCubit>().state.languageCode;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('change lang'),
+        title: Text(context.l10n.changeLanguage),
       ),
-      body: Column(
-        children: [
-          ListTile(
-            leading: const Text(
-              'en',
-              textScaleFactor: 2,
-            ),
-            title: const Text(
-              'English',
-              textScaleFactor: 1.2,
-            ),
-            onTap: () {
-              context.read<LanguageCubit>().changeLanguage(context.read<LanguageCubit>().state);
-              Navigator.pop(context);
-            },
-            trailing: const Icon(Icons.check, color: Colors.green),
-          ),
-          const Divider(),
-        ],
+      body: ListView(
+        children: languageToLocalKey.keys.map((language) {
+          return Column(
+            children: [
+              ListTile(
+                leading: Text(
+                  language.values.first,
+                  style: TextStyle(fontSize: Theme.of(context).textTheme.titleLarge!.fontSize),
+                ),
+                title: Text(
+                  languageToLocalKey[language]!(AppLocalizations.of(context)!),
+                  style: TextStyle(fontSize: Theme.of(context).textTheme.labelSmall!.fontSize),
+                ),
+                onTap: () {
+                  context.read<LanguageCubit>().changeLanguage(Locale(language.keys.first));
+                  Navigator.pop(context);
+                },
+                trailing: language.keys.first == currentLanguage
+                    ? const Icon(Icons.check, color: Colors.green)
+                    : null,
+              ),
+              const Divider(),
+            ],
+          );
+        }).toList(),
       ),
     );
   }

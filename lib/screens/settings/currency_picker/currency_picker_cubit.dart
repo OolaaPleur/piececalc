@@ -7,26 +7,36 @@ import 'package:get_it/get_it.dart';
 import '../../../data/repositories/settings_repository.dart';
 
 /// Represents the possible states for the [CurrencyPickerCubit].
-abstract class CurrencyPickerState {}
+abstract class CurrencyPickerState {
+  /// Creates a [CurrencyPickerState] state.
+  CurrencyPickerState({required this.currencyName});
+
+  /// The [currencyName] represents the details of the currency.
+  /// It can be empty or contain actual values.
+  final Map<String, dynamic> currencyName;
+}
 
 /// The initial state for the [CurrencyPickerCubit].
 ///
 /// This state represents the moment before any interaction or request
 /// related to currency picking has been made.
-class CurrencyInitial extends CurrencyPickerState {}
+class CurrencyInitial extends CurrencyPickerState {
+  /// Creates a [CurrencyInitial] state.
+  CurrencyInitial() : super(currencyName: {'name': '', 'symbol': ''});
+}
 
 /// Represents the state when currency data is being loaded.
-class CurrencyLoading extends CurrencyPickerState {}
+class CurrencyLoading extends CurrencyPickerState {
+  /// Creates a [CurrencyLoading] state.
+  CurrencyLoading({required super.currencyName});
+}
 
 /// Represents the state when currency data has been successfully loaded.
 ///
 /// Contains the name and details of the loaded currency.
 class CurrencyLoaded extends CurrencyPickerState {
-  /// Creates a [CurrencyLoaded] state with the provided [currencyName].
-  CurrencyLoaded(this.currencyName);
-
-  /// The [currencyName] represents the details of the loaded currency.
-  final Map<String, dynamic> currencyName;
+  /// Creates a [CurrencyLoaded] state.
+  CurrencyLoaded({required super.currencyName});
 }
 
 /// A [Cubit] that manages the state for currency picking operations.
@@ -50,13 +60,13 @@ class CurrencyPickerCubit extends Cubit<CurrencyPickerState> {
   /// this cubit will emit either [CurrencyLoading], [CurrencyLoaded], or
   /// another relevant state.
   Future<void> loadCurrency() async {
-    emit(CurrencyLoading());
+    emit(CurrencyLoading(currencyName: state.currencyName));
     final currencyJson = await _settingsRepository.getStringValue('currency');
     final currencyList = jsonDecode(currencyJson) as List<dynamic>;
     final firstCurrency = currencyList[0] as Map<String, dynamic>;
     final name = firstCurrency['name'] as String;
     final symbol = firstCurrency['symbol'] as String;
-    emit(CurrencyLoaded({'name': name, 'symbol': symbol}));
+    emit(CurrencyLoaded(currencyName: {'name': name, 'symbol': symbol}));
   }
   /// Initiates the save process for the given currency.
   ///
@@ -71,6 +81,6 @@ class CurrencyPickerCubit extends Cubit<CurrencyPickerState> {
     final savedWorks = <dynamic>[data];
     final updatedWorksJson = jsonEncode(savedWorks);
     await _settingsRepository.setStringValue('currency', updatedWorksJson);
-    emit(CurrencyLoaded({'name': data['name'], 'symbol': data['symbol']}));
+    emit(CurrencyLoaded(currencyName: {'name': data['name'], 'symbol': data['symbol']}));
   }
 }

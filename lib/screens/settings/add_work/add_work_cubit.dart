@@ -47,6 +47,16 @@ class WorkDeleted extends AddWorkState {}
 /// and because of that it cant be deleted.
 class WorkCantBeDeleted extends AddWorkState {}
 
+/// Represents the state when a work task can be deleted.
+/// We need to have it to know, do app needs to show snackbar that item
+/// cant be deleted or show alert dialog with confirmation of deletion.
+class WorkCanBeDeleted extends AddWorkState {
+  /// Creates a [WorkCanBeDeleted] state with the provided work to delete.
+  WorkCanBeDeleted(this.workToDelete);
+  /// Works that user wants to delete.
+  final Work workToDelete;
+}
+
 /// Represents a state indicating an error while performing work-related operations.
 class WorkError extends AddWorkState {
   /// Creates a [WorkError] state with the provided error message.
@@ -78,7 +88,6 @@ class AddWorkCubit extends Cubit<AddWorkState> {
   Future<void> saveData(Map<String, dynamic> data, {bool isEditing = false}) async {
     emit(WorkSaving());
     final db = await DatabaseOperations.openAppDatabaseAndCreateTables('piececalc');
-    //await db.insert('works', data, conflictAlgorithm: ConflictAlgorithm.replace);
     if (isEditing) {
       await db.update('works', data, where: 'id = ?', whereArgs: [data['id']]);
     } else {
@@ -96,6 +105,33 @@ class AddWorkCubit extends Cubit<AddWorkState> {
     final savedWorks = await _workRepository.loadWorks();
     emit(WorksLoaded(savedWorks));
     //await DatabaseOperations.closeDatabase(db);
+  }
+
+  /// Check if work could be deleted.
+  Future<void> checkDeletionPossibility (Work workToDelete) async {
+    final db = await DatabaseOperations.openAppDatabase('piececalc');
+    try {
+      // Check if the work to delete exists in the 'done_works' table
+      final doneWorksResult =
+      await db.query('done_works', where: 'workId = ?', whereArgs: [workToDelete.id]);
+
+      final worksQueryResult = await db.query('works');
+      final works = worksQueryResult.map(Work.fromJson).toList();
+      // If the work exists in 'done_works', we can't delete it from 'works'
+      if (doneWorksResult.isNotEmpty) {
+        emit(WorkCantBeDeleted());
+        emit(WorksLoaded(works));
+        return;
+      } else {
+        emit(WorkCanBeDeleted(workToDelete));
+        emit(WorksLoaded(works));
+      }
+    } catch (error) {
+      // Handle the database error. This could be logging the error, showing a user-friendly message, etc.
+      emit(
+        WorkError(error.toString()),
+      ); // Assuming you have an ErrorState or similar to emit errors.
+    }
   }
 
   /// Deletes a specific work task.
