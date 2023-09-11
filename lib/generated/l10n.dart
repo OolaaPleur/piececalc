@@ -797,6 +797,16 @@ class S {
     );
   }
 
+  /// `Add new field`
+  String get addNewField {
+    return Intl.message(
+      'Add new field',
+      name: 'addNewField',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{count, plural, =0{0 hours} =1{1 hour} other{{count} hours}}`
   String hoursOnly(num count) {
     return Intl.plural(
@@ -820,16 +830,6 @@ class S {
       name: 'minutesOnly',
       desc: '',
       args: [count],
-    );
-  }
-
-  /// `Add new field`
-  String get addNewField {
-    return Intl.message(
-      'Add new field',
-      name: 'addNewField',
-      desc: '',
-      args: [],
     );
   }
 }

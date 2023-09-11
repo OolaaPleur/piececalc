@@ -118,6 +118,11 @@
   "emailToMe": "Написать мне на почту!",
   "invalidFormat": "Неверный формат",
 
+  "error": "Ошибка",
+  "piececalc": "PieceCa(lc)",
+  "selectTime": "Выберите время",
+  "addNewField": "Добавить новое поле",
+
   "hoursOnly": "{count, plural, =0{0 часов} one{1 час} few{{count} часа} many{{count} часов} other{{count} часов}}",
   "minutesOnly": "{count, plural, =0{0 минут} one{1 минута} few{{count} минуты} many{{count} минут} other{{count} минут}}"
 

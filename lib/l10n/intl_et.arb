@@ -77,6 +77,11 @@
   "emailToMe": "Saada mulle e-kiri!",
   "invalidFormat": "Vigane formaat",
 
+  "error": "Viga",
+  "piececalc": "PieceCa(lc)",
+  "selectTime": "Vali aeg",
+  "addNewField": "Lisa uus väli",
+
   "hoursOnly": "{count, plural, =0{0 tundi} =1{1 tund} other{{count} tundi}}",
   "minutesOnly": "{count, plural, =0{0 minutit} =1{1 minut} other{{count} minutit}}"
 

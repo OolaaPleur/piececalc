@@ -86,8 +86,9 @@
   "error": "Error",
   "piececalc": "PieceCa(lc)",
   "selectTime": "Select Time",
+  "addNewField": "Add new field",
 
   "hoursOnly": "{count, plural, =0{0 hours} =1{1 hour} other{{count} hours}}",
-  "minutesOnly": "{count, plural, =0{0 minutes} =1{1 minute} other{{count} minutes}}",
-  "addNewField": "Add new field"
+  "minutesOnly": "{count, plural, =0{0 minutes} =1{1 minute} other{{count} minutes}}"
+
 }
