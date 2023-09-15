@@ -40,7 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteTask" : MessageLookupByLibrary.simpleMessage("Удалить"),
     "earned" : MessageLookupByLibrary.simpleMessage("Цена"),
     "editTask" : MessageLookupByLibrary.simpleMessage("Редактировать задачу"),
-    "emailToMe" : MessageLookupByLibrary.simpleMessage("Написать мне на почту!"),
+    "emailToMe" : MessageLookupByLibrary.simpleMessage("Напиши мне на почту!"),
     "english" : MessageLookupByLibrary.simpleMessage("Английский"),
     "enterDate" : MessageLookupByLibrary.simpleMessage("Введите дату"),
     "error" : MessageLookupByLibrary.simpleMessage("Ошибка"),

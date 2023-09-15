@@ -832,6 +832,236 @@ class S {
       args: [count],
     );
   }
+
+  /// `Could not launch`
+  String get couldNotLaunch {
+    return Intl.message(
+      'Could not launch',
+      name: 'couldNotLaunch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate us on Google Play!`
+  String get rateUsOnGooglePlay {
+    return Intl.message(
+      'Rate us on Google Play!',
+      name: 'rateUsOnGooglePlay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your feedback motivates me to make the app even better!`
+  String get yourFeedbackMotivatesMeToMakeTheAppEvenBetter {
+    return Intl.message(
+      'Your feedback motivates me to make the app even better!',
+      name: 'yourFeedbackMotivatesMeToMakeTheAppEvenBetter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Done`
+  String get done {
+    return Intl.message(
+      'Done',
+      name: 'done',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome to PieceCa(lc) 📊`
+  String get introFirstScreenHeader {
+    return Intl.message(
+      'Welcome to PieceCa(lc) 📊',
+      name: 'introFirstScreenHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your comprehensive tool for calculating, tracking, and organizing your work. Dive in to discover how you can elevate your productivity!`
+  String get introFirstScreenBody {
+    return Intl.message(
+      'Your comprehensive tool for calculating, tracking, and organizing your work. Dive in to discover how you can elevate your productivity!',
+      name: 'introFirstScreenBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Instant Work Calculation 💹`
+  String get introSecondScreenHeader {
+    return Intl.message(
+      'Instant Work Calculation 💹',
+      name: 'introSecondScreenHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Calculate the amount of work you've done with a tap and get a clear, organized overview instantly.`
+  String get introSecondScreenBody {
+    return Intl.message(
+      'Calculate the amount of work you\'ve done with a tap and get a clear, organized overview instantly.',
+      name: 'introSecondScreenBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Organization 📅`
+  String get introSecondAndHalfScreenHeader {
+    return Intl.message(
+      'Monthly Organization 📅',
+      name: 'introSecondAndHalfScreenHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `With PieceCa(lc), your tasks are automatically sorted by month. Making it easier than ever to review and track your progress.`
+  String get introSecondAndHalfScreenBody {
+    return Intl.message(
+      'With PieceCa(lc), your tasks are automatically sorted by month. Making it easier than ever to review and track your progress.',
+      name: 'introSecondAndHalfScreenBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Secure Backup 🛡️`
+  String get introThirdScreenHeader {
+    return Intl.message(
+      'Secure Backup 🛡️',
+      name: 'introThirdScreenHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Never fear data loss. Easily create backups for all your data or for specific tasks from any month.`
+  String get introThirdScreenBody {
+    return Intl.message(
+      'Never fear data loss. Easily create backups for all your data or for specific tasks from any month.',
+      name: 'introThirdScreenBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Intuitive Design 🎨`
+  String get introFourthScreenHeader {
+    return Intl.message(
+      'Intuitive Design 🎨',
+      name: 'introFourthScreenHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A user-friendly interface designed with you in mind. Navigate with ease and get more done.`
+  String get introFourthScreenBody {
+    return Intl.message(
+      'A user-friendly interface designed with you in mind. Navigate with ease and get more done.',
+      name: 'introFourthScreenBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light & Dark Mode 🌓`
+  String get introFifthScreenHeader {
+    return Intl.message(
+      'Light & Dark Mode 🌓',
+      name: 'introFifthScreenHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose your vibe. Toggle between light and dark themes to match your mood or your surroundings.`
+  String get introFifthScreenBody {
+    return Intl.message(
+      'Choose your vibe. Toggle between light and dark themes to match your mood or your surroundings.',
+      name: 'introFifthScreenBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ready to Begin? 🚀`
+  String get introSixthScreenHeader {
+    return Intl.message(
+      'Ready to Begin? 🚀',
+      name: 'introSixthScreenHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dive into PieceCa(lc) and start making your work calculation more organized and efficient today!`
+  String get introSixthScreenBody {
+    return Intl.message(
+      'Dive into PieceCa(lc) and start making your work calculation more organized and efficient today!',
+      name: 'introSixthScreenBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start tutorial again`
+  String get startTutorialAgain {
+    return Intl.message(
+      'Start tutorial again',
+      name: 'startTutorialAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure?`
+  String get areYouSure {
+    return Intl.message(
+      'Are you sure?',
+      name: 'areYouSure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select color`
+  String get selectColor {
+    return Intl.message(
+      'Select color',
+      name: 'selectColor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select color shade`
+  String get selectColorShade {
+    return Intl.message(
+      'Select color shade',
+      name: 'selectColorShade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected color and its shades`
+  String get selectedColorAndItsShades {
+    return Intl.message(
+      'Selected color and its shades',
+      name: 'selectedColorAndItsShades',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

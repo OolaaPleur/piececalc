@@ -3,28 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:piececalc/theme/theme_constants.dart';
 
+import 'theme_colors.dart';
+
 /// Extension on BuildContext, to make shorter call.
-extension BuildContextExt on BuildContext {}
+extension BuildContextExt on BuildContext {
+  ThemeColors get color => Theme.of(this).extension<ThemeColors>()!;
+}
 
 /// App theme choices.
 class FlutterAppTheme {
   /// Light theme.
   static ThemeData light() {
     return FlexThemeData.light(
-      //textTheme: titleMediumTextTheme,//TODO remove when stop editing next lines on texttheme
-      textTheme: const TextTheme().copyWith(
-        // titleMedium: const TextStyle(
-        //   fontSize: 16,
-        // ),
-        titleLarge: const TextStyle(
-          fontSize: 21,
-        ),
-        labelSmall: const TextStyle(
-          fontSize: 19,
-        ),
-      ),
+      error: const Color(0xffbf324c),
+      textTheme: textThemeStyles,
       extensions: <ThemeExtension<dynamic>>[
-        //ThemeColors.light(),
+        ThemeColors.light(),
       ],
       scheme: FlexScheme.mango,
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
@@ -38,16 +32,17 @@ class FlutterAppTheme {
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
       swapLegacyOnMaterial3: true,
-      fontFamily: 'NotoSans',
+      fontFamily: GoogleFonts.notoSans().fontFamily,
     );
   }
 
   /// Dark theme.
   static ThemeData dark() {
     return FlexThemeData.dark(
+      error: const Color(0xffbf324c),
       textTheme: textThemeStyles,
       extensions: <ThemeExtension<dynamic>>[
-        //ThemeColors.dark(),
+        ThemeColors.dark(),
       ],
       scheme: FlexScheme.mango,
       surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,

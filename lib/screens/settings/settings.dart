@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/screens/settings/currency_picker/currency_picker.dart';
 import 'package:piececalc/screens/settings/language_change/language_change.dart';
-import 'package:piececalc/screens/settings/widgets/dark_mode_switch.dart';
+import 'package:piececalc/screens/settings/theme_switch/theme_segmented_buttons.dart';
+import 'package:piececalc/screens/settings/widgets/show_tutorial_again.dart';
 import 'package:piececalc/theme/theme_constants.dart';
 
 import '../../theme/bloc/theme_bloc.dart';
@@ -10,6 +11,7 @@ import 'add_work/add_work.dart';
 import 'backup/backup.dart';
 import 'widgets/app_info_text.dart';
 import 'widgets/email_developer_list_tile.dart';
+import 'widgets/rate_app_tile.dart';
 
 /// Represents the settings page of the application.
 ///
@@ -27,7 +29,7 @@ class Settings extends StatelessWidget {
         return ListView(
           padding: const EdgeInsets.all(settingsPadding),
           children: [
-            const DarkModeSwitch(),
+            const ThemeSegmentedButtons(),
             const Divider(),
             const AddWork(),
             const Divider(),
@@ -37,7 +39,11 @@ class Settings extends StatelessWidget {
             const Divider(),
             const LanguageChange(),
             const Divider(),
+            const ShowTutorialAgain(),
+            const Divider(),
             const EmailDeveloperListTile(),
+            const Divider(),
+            const RateAppTile(),
             const Divider(),
             const AppInfoText(),
           ],

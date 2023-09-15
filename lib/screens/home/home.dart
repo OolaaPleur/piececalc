@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
-import 'package:piececalc/screens/home/task_editor/task_editor_bloc.dart';
 import 'package:piececalc/screens/settings/settings.dart';
+import '../../utils/navigation.dart';
 import '../data/monthly_work_info.dart';
 import '../data/monthly_work_info_cubit.dart';
 import '../tasks/tasks.dart';
 import 'home_bloc.dart';
-import 'task_editor/task_editor.dart';
 
 /// [Home] widget serves as the main screen of the application.
 ///
@@ -40,10 +39,10 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  static const List<Widget> _pages = <Widget>[
+  static final List<Widget> _pages = <Widget>[
     MonthlyWorkInfo(),
-    Tasks(),
-    Settings(),
+    const Tasks(),
+    const Settings(),
   ];
 
   @override
@@ -115,15 +114,7 @@ class _HomeState extends State<Home> {
                   return FloatingActionButton(
                     tooltip: context.l10n.tapToAddTask,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (context) {
-                            context.read<TaskEditorBloc>().add(LoadWorkEvent());
-                            return const TaskEditor();
-                          },
-                        ),
-                      );
+                      Navigation.navigateToTaskEditor(context);
                     },
                     child: const Icon(Icons.add),
                   );
@@ -137,12 +128,15 @@ class _HomeState extends State<Home> {
                 if (monthlyWorkInfoState is DataLoaded) {
                   return FloatingActionButton(
                     tooltip: context.l10n.shareMonthData,
-                    onPressed: () {
-                      context.read<MonthlyWorkInfoCubit>().createBackup(
-                            monthlyWorkInfoState.workData,
-                            monthlyWorkInfoState.compositeTaskInfo,
-                          );
-                    },
+                    onPressed: monthlyWorkInfoState.workData.isEmpty
+                        ? null
+                        : () {
+                            context.read<MonthlyWorkInfoCubit>().createBackup(
+                                  monthlyWorkInfoState.workData,
+                                  monthlyWorkInfoState.compositeTaskInfo,
+                                );
+                          },
+                    backgroundColor: monthlyWorkInfoState.workData.isEmpty ? Colors.grey : null,
                     child: const Icon(Icons.share),
                   );
                 }

@@ -15,6 +15,7 @@ class AppSnackBar {
   /// Returns snackbar.
   SnackBar showSnackBar() {
     return SnackBar(
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       duration: const Duration(seconds: snackbarDuration),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,6 +24,7 @@ class AppSnackBar {
             child: Text.rich(
               TextSpan(
                 text: message,
+                style: const TextStyle(color: Colors.black),
               ),
               textAlign: TextAlign.center,
             ),
@@ -31,11 +33,13 @@ class AppSnackBar {
             onTap: () {
               ScaffoldMessenger.of(context).removeCurrentSnackBar();
             },
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: snackbarPadding), // adjust this value as needed
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: snackbarPadding),
+              // adjust this value as needed
               child: Icon(
-                Icons.close,
-                color: snackbarRemoveIconColor,
+                Icons.close_outlined,
+                color: Theme.of(context).colorScheme.error,
+                size: 35,
               ),
             ),
           ),

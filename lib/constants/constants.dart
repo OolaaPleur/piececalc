@@ -8,6 +8,12 @@ enum PaymentType {
   hourlyPayment
 }
 
+enum AppTheme {
+  light,
+  dark,
+  auto
+}
+
 /// RegExp pattern to match valid numbers with a dot or comma.
 final numericPattern = RegExp(r'^\d+([.,]?\d+)?$');
 

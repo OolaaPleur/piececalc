@@ -26,14 +26,13 @@ class NoWorkHasBeenAddedWidget extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                final cubit = context.read<AddWorkCubit>();
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (context) => BlocProvider.value(
-                      value: cubit,
-                      child: const AddWorkPage(),
-                    ),
+                    builder: (context) {
+                      context.read<AddWorkCubit>();
+                      return const AddWorkPage();
+                    },
                   ),
                 );
               },

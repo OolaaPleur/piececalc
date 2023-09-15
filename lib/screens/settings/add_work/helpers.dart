@@ -23,24 +23,16 @@ class AddWorkHelpers {
     required String workName,
     required PaymentType workType,
     required TextEditingController priceController,
+    required Color workColor,
   }) {
     final priceWithDot = priceController.text.trim().replaceAll(',', '.');
-
-    if (editedObject != null) {
-      return {
-        'id': editedObject.id,
-        'workName': workName,
-        'workType': workType == PaymentType.piecewisePayment ? 'piecewisePayment' : 'hourlyPayment',
-        'price': priceWithDot,
-      };
-    } else {
-      final uniqueKey = const Uuid().v1();
-      return {
-        'id': uniqueKey,
-        'workName': workName,
-        'workType': workType == PaymentType.piecewisePayment ? 'piecewisePayment' : 'hourlyPayment',
-        'price': priceWithDot,
-      };
-    }
+    final uniqueKey = const Uuid().v1();
+    return {
+      'id': editedObject != null ? editedObject.id : uniqueKey,
+      'workName': workName,
+      'workType': workType == PaymentType.piecewisePayment ? 'piecewisePayment' : 'hourlyPayment',
+      'price': priceWithDot,
+      'workColor': workColor.value.toString(),
+    };
   }
 }

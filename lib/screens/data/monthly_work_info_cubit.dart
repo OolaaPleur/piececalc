@@ -22,43 +22,56 @@ import '../../utils/helpers.dart';
 ///
 /// This serves as a foundation for all specific states related to loading,
 /// displaying, and manipulating monthly work information.
-abstract class MonthlyWorkInfoState {}
+abstract class MonthlyWorkInfoState {
+  MonthlyWorkInfoState({required this.workData});
+
+  /// Map containing the work items and their corresponding summaries.
+  final Map<Work, WorkSummary> workData;
+}
 
 /// Represents the initial state of the `MonthlyWorkInfo` page.
 ///
 /// Typically, this is the state before any data loading or operations have taken place.
-class Initial extends MonthlyWorkInfoState {}
+class Initial extends MonthlyWorkInfoState {
+  Initial() : super(workData: {});
+}
 
 /// Represents the state when the `MonthlyWorkInfo` data is being loaded.
-class Loading extends MonthlyWorkInfoState {}
+class Loading extends MonthlyWorkInfoState {
+  Loading({required super.workData});
+}
 
 /// Represents the state when the `MonthlyWorkInfo` data has been successfully loaded.
 ///
 /// Contains a map of work items and their respective summaries.
 class DataLoaded extends MonthlyWorkInfoState {
   /// Constructor for [DataLoaded].
-  DataLoaded(this.workData, this.compositeTaskInfo);
-
-  /// Map containing the work items and their corresponding summaries.
-  final Map<Work, WorkSummary> workData;
+  DataLoaded(this.compositeTaskInfo, {required super.workData, required this.month, required this.year, required this.completedTasks});
 
   /// Composite object of 'Work' and 'Task', needed in case user
   /// wants to share data about current month work.
   final List<CompositeTaskInfo> compositeTaskInfo;
+  final int month;
+  final int year;
+  final List<CompletedTask> completedTasks;
 }
 
 /// Represents the state when a work item is being deleted from the `MonthlyWorkInfo`.
-class Deleting extends MonthlyWorkInfoState {}
+class Deleting extends MonthlyWorkInfoState {
+  Deleting({required super.workData});
+}
 
 /// Represents the state after a work item has been successfully deleted from the `MonthlyWorkInfo`.
-class Deleted extends MonthlyWorkInfoState {}
+class Deleted extends MonthlyWorkInfoState {
+  Deleted({required super.workData});
+}
 
 /// Represents an error state for the `MonthlyWorkInfo` page.
 ///
 /// This state is typically invoked when there's an issue loading or manipulating data.
 class DataError extends MonthlyWorkInfoState {
   /// Constructor for [DataError].
-  DataError(this.error);
+  DataError(this.error,{required super.workData});
 
   /// Detailed error message providing insights into what went wrong.
   final String error;
@@ -148,13 +161,13 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
         }
       }
       if (compositeTasks.isEmpty) {
-        emit(DataLoaded({}, []));
+        emit(DataLoaded(workData: {}, month: month, year: year, [],completedTasks: []));
         return;
       }
-      emit(DataLoaded(workSummaryByWorkId, compositeTasks));
+      emit(DataLoaded(workData: workSummaryByWorkId, month: month, year: year, compositeTasks, completedTasks: completedTasks));
     } catch (error) {
       log.log(Level.WARNING, error.toString());
-      emit(DataError(error.toString()));
+      emit(DataError(error.toString(), workData: {}));
     }
   }
 

@@ -40,17 +40,32 @@ const saveButtonVerticalPadding = 20.0;
 /// Delete icon size.
 const deleteIconSize = 30.0;
 
+/// INTRO STYLE FORWARD.
+/// Intro bottom color.
+Color introBottomColor = Colors.red[300]!;
+
+/// First intro page top color.
+const Color introFirstPageTopColor = Color(0xFFfffad0);
+
+/// Size of first from top SizedBox height.
+const double firstSizeBoxHeight = 50;
+
+/// Size of second from top SizedBox height.
+const double secondSizeBoxHeight = 40;
+
+/// Scale of title text.
+const double introTitleTextScale = 1.7;
+
+/// Scale of body text.
+const double introBodyTextScale = 1.2;
+
 
 /// Changed default textTheme styles.
 final textThemeStyles = const TextTheme().copyWith(
-  titleMedium: const TextStyle(
-    fontSize: 16,
-    // fontWeight: FontWeight.bold,
-    // letterSpacing: 0.5,
-  ),
   titleLarge: const TextStyle(
     fontSize: 21,
-    // fontWeight: FontWeight.bold,
-    // letterSpacing: 0.5,
+  ),
+  labelSmall: const TextStyle(
+    fontSize: 19,
   ),
 );

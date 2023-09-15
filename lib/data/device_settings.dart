@@ -36,17 +36,14 @@ class DeviceSettings {
     if (valueKey == 'currency') {
       return prefs.getString(valueKey) ?? '[{"symbol":"","name":"none picked"}]';
     }
+    if (valueKey == 'theme') {
+      return prefs.getString(valueKey) ?? 'AppTheme.auto';
+    }
     return '';
   }
   /// Get String value by its [valueKey].
   Future<bool> getBoolValue(String valueKey) async {
     final prefs = await SharedPreferences.getInstance();
-    if (valueKey == 'isDark') {
-      return prefs.getBool(valueKey) ?? false;
-    }
-    if (valueKey == 'tutorial_passed') {
-      return prefs.getBool(valueKey) ?? false;
-    }
     if (valueKey == 'first_load') {
       return prefs.getBool(valueKey) ?? false;
     }

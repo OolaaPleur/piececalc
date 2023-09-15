@@ -16,7 +16,7 @@ class DatabaseOperations {
   static Future<Database> openAppDatabaseAndCreateTables(String databaseName) async {
     final db = await DatabaseOperations.openAppDatabase('piececalc');
     await DatabaseOperations.createTable(db, 'works', '''
-    id TEXT PRIMARY KEY, workName TEXT, workType TEXT, price TEXT''');
+    id TEXT PRIMARY KEY, workName TEXT, workType TEXT, price TEXT, orderIndex TEXT, workColor TEXT''');
     await DatabaseOperations.createTable(db, 'done_works', '''
     id TEXT PRIMARY KEY, workId TEXT, amount TEXT, dateCreated TEXT''');
     return db;

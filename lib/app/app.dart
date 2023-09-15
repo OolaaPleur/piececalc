@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 
+import '../data/repositories/settings_repository.dart';
 import '../screens/data/monthly_work_info_cubit.dart';
 import '../screens/home/home.dart';
 import '../screens/home/home_bloc.dart';
 import '../screens/home/task_editor/task_editor_bloc.dart';
+import '../screens/intro/intro.dart';
 import '../screens/settings/add_work/add_work_cubit.dart';
 import '../screens/settings/currency_picker/currency_picker_cubit.dart';
 import '../screens/settings/language_change/language_cubit.dart';
@@ -25,6 +28,15 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final _settingsRepository = GetIt.I<SettingsRepository>();
+  late Future<bool> firstLoadFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    firstLoadFuture = _settingsRepository.getBoolValue('first_load');
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentDate = DateTime.now();
@@ -78,6 +90,7 @@ class _AppState extends State<App> {
             listener: (context, state) {
               if (state is WorkSaved) {
                 context.read<TaskEditorBloc>().add(LoadWorkEvent());
+                context.read<TasksCubit>().loadData();
               }
             },
           ),
@@ -91,6 +104,13 @@ class _AppState extends State<App> {
           BlocListener<TaskEditorBloc, TaskEditorState>(
             listener: (context, state) {
               if (state is TaskSaved) {
+                context
+                    .read<MonthlyWorkInfoCubit>()
+                    .loadData(month: currentDate.month, year: currentDate.year);
+              }
+              if (state is TaskEditorDeleted) {
+                context.read<TaskEditorBloc>().add(LoadWorkEvent());
+                context.read<TasksCubit>().loadData();
                 context
                     .read<MonthlyWorkInfoCubit>()
                     .loadData(month: currentDate.month, year: currentDate.year);
@@ -110,7 +130,24 @@ class _AppState extends State<App> {
               theme: theme.themeData,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
-              home: const Home(),
+              home: FutureBuilder<bool>(
+                future: firstLoadFuture,
+                builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data == false) {
+                      return const Intro();
+                    } else {
+                      return const Home();
+                    }
+                  } else {
+                    return const Scaffold(
+                      body: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                },
+              ),
             );
           },
         ),

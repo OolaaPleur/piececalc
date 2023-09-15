@@ -103,8 +103,24 @@ class AddWorkCubit extends Cubit<AddWorkState> {
   Future<void> loadWorks() async {
     emit(WorksLoading());
     final savedWorks = await _workRepository.loadWorks();
+    await saveOrder(savedWorks);
+  }
+
+  /// Saves order of items.
+  Future<void> saveOrder(List<Work> savedWorks) async {
+    final db = await DatabaseOperations.openAppDatabase('piececalc');
+    // Begin a transaction to ensure data consistency
+    await db.transaction((txn) async {
+      for (final item in savedWorks) {
+        await txn.update(
+            'works',
+            {'orderIndex': item.orderIndex}, // Update the order_index column
+            where: 'id = ?', // Assuming you have an ID column to uniquely identify items
+            whereArgs: [item.id]
+        ,);
+      }
+    });
     emit(WorksLoaded(savedWorks));
-    //await DatabaseOperations.closeDatabase(db);
   }
 
   /// Check if work could be deleted.

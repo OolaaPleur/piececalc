@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
+import 'package:piececalc/screens/home/task_editor/task_editor_bloc.dart';
 
 import '../../../../data/models/composite_task_info.dart';
 import '../../../../theme/theme_constants.dart';
-import '../../../tasks/tasks_bloc.dart';
 
 /// Widget, shows button for task deletion.
 class DeleteTask extends StatelessWidget {
@@ -27,7 +27,10 @@ class DeleteTask extends StatelessWidget {
             vertical: textFieldVerticalPadding,
           ),
           child: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error, foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Colors.white,
+            ),
             onPressed: () {
               final cti = editedObject!;
               showAlertDialog(context, cti);
@@ -45,7 +48,9 @@ class DeleteTask extends StatelessWidget {
     final Widget cancelButton = TextButton(
       child: Text(context.l10n.yes),
       onPressed: () {
-        context.read<TasksCubit>().deleteTask(workData!, compositeTaskInfo);
+        context.read<TaskEditorBloc>().add(
+            TaskEditorDeleteTask(compositeTaskInfo: compositeTaskInfo, groupedByDate: workData!),);
+        context.read<TaskEditorBloc>().add(TaskEditorClearTextFields());
         Navigator.pop(context);
         Navigator.pop(context);
       },

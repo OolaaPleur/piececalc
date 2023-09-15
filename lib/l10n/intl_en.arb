@@ -89,6 +89,31 @@
   "addNewField": "Add new field",
 
   "hoursOnly": "{count, plural, =0{0 hours} =1{1 hour} other{{count} hours}}",
-  "minutesOnly": "{count, plural, =0{0 minutes} =1{1 minute} other{{count} minutes}}"
+  "minutesOnly": "{count, plural, =0{0 minutes} =1{1 minute} other{{count} minutes}}",
+  "couldNotLaunch": "Could not launch",
+  "rateUsOnGooglePlay": "Rate us on Google Play!",
+  "yourFeedbackMotivatesMeToMakeTheAppEvenBetter": "Your feedback motivates me to make the app even better!",
 
+  "done": "Done",
+
+  "introFirstScreenHeader": "Welcome to PieceCa(lc) \uD83D\uDCCA",
+  "introFirstScreenBody": "Your comprehensive tool for calculating, tracking, and organizing your work. Dive in to discover how you can elevate your productivity!",
+  "introSecondScreenHeader": "Instant Work Calculation \uD83D\uDCB9",
+  "introSecondScreenBody": "Calculate the amount of work you've done with a tap and get a clear, organized overview instantly.",
+  "introSecondAndHalfScreenHeader": "Monthly Organization \uD83D\uDCC5",
+  "introSecondAndHalfScreenBody": "With PieceCa(lc), your tasks are automatically sorted by month. Making it easier than ever to review and track your progress.",
+  "introThirdScreenHeader": "Secure Backup \uD83D\uDEE1️",
+  "introThirdScreenBody": "Never fear data loss. Easily create backups for all your data or for specific tasks from any month.",
+  "introFourthScreenHeader": "Intuitive Design \uD83C\uDFA8",
+  "introFourthScreenBody": "A user-friendly interface designed with you in mind. Navigate with ease and get more done.",
+  "introFifthScreenHeader": "Light & Dark Mode \uD83C\uDF13",
+  "introFifthScreenBody": "Choose your vibe. Toggle between light and dark themes to match your mood or your surroundings.",
+  "introSixthScreenHeader": "Ready to Begin? \uD83D\uDE80",
+  "introSixthScreenBody": "Dive into PieceCa(lc) and start making your work calculation more organized and efficient today!",
+
+  "startTutorialAgain": "Start tutorial again",
+  "areYouSure": "Are you sure?",
+  "selectColor": "Select color",
+  "selectColorShade": "Select color shade",
+  "selectedColorAndItsShades": "Selected color and its shades"
 }

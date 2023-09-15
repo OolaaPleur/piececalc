@@ -87,7 +87,7 @@ class WorkPicker extends StatelessWidget {
           controller: group.typeAheadController,
         ),
         suggestionsCallback: (pattern) async {
-          context.read<TaskEditorBloc>().add(LoadWorkEvent());
+          context.read<TaskEditorBloc>();
           matches = <Work>[...loadedList];
 
           final startsWithMatches = matches

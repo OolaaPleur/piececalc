@@ -14,3 +14,6 @@ class SomeErrorHappened implements AppException {
   /// Constructor for [SomeErrorHappened].
   const SomeErrorHappened();
 }
+class CouldNotLaunch implements AppException {
+  const CouldNotLaunch();
+}

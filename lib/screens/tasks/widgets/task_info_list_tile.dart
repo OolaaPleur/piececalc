@@ -27,6 +27,7 @@ class TaskInfoListTile extends StatelessWidget {
     return ListTile(
       onTap: () {
         context.read<TaskEditorBloc>().add(LoadWorkEvent());
+        context.read<TaskEditorBloc>().add(TaskEditorCreateTextField());
         Navigator.push(
           context,
           MaterialPageRoute<void>(
@@ -38,7 +39,7 @@ class TaskInfoListTile extends StatelessWidget {
         );
       },
       key: ValueKey(taskInfo.completedTask.id),
-      title: Text(taskInfo.work.workName),
+      title: Text(taskInfo.work.workName, style: TextStyle(fontSize: Theme.of(context).textTheme.titleLarge!.fontSize),),
       subtitle: Padding(
         padding: const EdgeInsets.only(top: listTilePadding),
         child: _buildSubtitleText(taskInfo, context),
@@ -66,12 +67,12 @@ class TaskInfoListTile extends StatelessWidget {
     if (taskInfo.work.paymentType == PaymentType.piecewisePayment.toString().split('.').last) {
       return Text(
         '${context.l10n.amount}: ${Helpers.formatNumber(double.parse(taskInfo.completedTask.amount))}',
-        style: TextStyle(fontSize: Theme.of(context).textTheme.labelLarge!.fontSize),
+        style: TextStyle(fontSize: Theme.of(context).textTheme.titleMedium!.fontSize),
       );
     } else {
       return Text(
         '${context.l10n.timeSpent}: ${Helpers.formatDuration(taskInfo.completedTask.amount, context)}',
-        style: TextStyle(fontSize: Theme.of(context).textTheme.labelLarge!.fontSize),
+        style: TextStyle(fontSize: Theme.of(context).textTheme.titleMedium!.fontSize),
       );
     }
   }
