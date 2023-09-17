@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
 
-import '../home/home_bloc.dart';
+import '../home/bloc/home_bloc.dart';
 import 'tasks_bloc.dart';
 import 'widgets/date_header.dart';
 import 'widgets/no_work_has_been_added_widget.dart';

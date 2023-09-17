@@ -1,8 +1,10 @@
 import '../constants/constants.dart';
 
-extension AppThemeExtension on String {
-  AppTheme toAppTheme() {
-    switch (this) {
+/// Helper widget for Theme.
+class ThemeHelper {
+  /// Convert String to AppTheme enum.
+  static AppTheme toAppTheme(String theme) {
+    switch (theme) {
       case 'AppTheme.light':
         return AppTheme.light;
       case 'AppTheme.dark':

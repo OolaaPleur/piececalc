@@ -54,7 +54,7 @@ PageViewModel introFifthPage(BuildContext context) {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             context.l10n.introFifthScreenBody,
-            style: TextStyle(fontSize: Theme.of(context).textTheme.labelLarge!.fontSize),
+            textScaleFactor: introBodyTextScale,
             textAlign: TextAlign.center,
           ),
         ),

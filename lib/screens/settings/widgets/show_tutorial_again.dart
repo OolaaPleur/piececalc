@@ -30,12 +30,10 @@ class ShowTutorialAgain extends StatelessWidget {
                   TextButton(
                     child: Text(AppLocalizations.of(context)!.yes),
                     onPressed: () {
-                      GetIt.I<SettingsRepository>()
-                        ..setBoolValue('tutorial_passed', value: false)
-                        ..setBoolValue('first_load', value: false);
+                      GetIt.I<SettingsRepository>().setBoolValue('first_load', value: false);
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute<void>(builder: (context) => const Intro()),
-                            (Route<dynamic> route) => false,
+                        (Route<dynamic> route) => false,
                       );
                       //restartApp(context);
                     },

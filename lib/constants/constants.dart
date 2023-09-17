@@ -8,9 +8,13 @@ enum PaymentType {
   hourlyPayment
 }
 
+/// Themes of app.
 enum AppTheme {
+  /// Light theme.
   light,
+  /// Dark theme.
   dark,
+  /// System theme.
   auto
 }
 
@@ -23,7 +27,6 @@ final Map<Map<String, String>, String Function(AppLocalizations)> languageToLoca
   {'en': '🇺🇸'}: (localizations) => localizations.english,
   {'et': '🇪🇪'}: (localizations) => localizations.estonian,
   {'ru': '🇷🇺'}: (localizations) => localizations.russian,
-
 };
 
 /// Enum representing the months of the year.

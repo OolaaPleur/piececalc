@@ -33,7 +33,7 @@ class BackupService {
   /// This method fetches data from the 'works' and 'done_works' tables,
   /// converts them to CSV format, writes them to a file, and initiates
   /// a sharing intent for the user to share the backup file.
-  Future<void> createBackupAndShare() async {
+  Future<void> createBackupAndShare({required String subject, required String text}) async {
     final db = await DatabaseOperations.openAppDatabaseAndCreateTables('piececalc');
     final worksList = await db.query('works');
     final doneWorksList = await db.query('done_works');
@@ -46,6 +46,6 @@ class BackupService {
 
     final file = File(filePath);
     await file.writeAsString('$worksCSV\n\n$doneWorksCSV');
-    await Share.shareFiles([filePath], subject: 'Backup of my data', text: 'Here is my backup from PieceCalc.');
+    await Share.shareFiles([filePath], subject: subject, text: text);
   }
 }

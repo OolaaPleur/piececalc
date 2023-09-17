@@ -55,8 +55,5 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await Firebase.initializeApp();
   // Pass all uncaught errors from the framework to Crashlytics.
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-  // final FirebasePerformance _performance = FirebasePerformance.instance;
-  //
-  // _performance.newTrace('trace_name').start();
   runApp(await builder());
 }

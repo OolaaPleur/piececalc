@@ -22,6 +22,7 @@ class ActionButtons extends StatelessWidget {
   /// Map of composite tasks as values and dates in string as keys.
   final Map<String, List<CompositeTaskInfo>>? workData;
 
+  /// TextField group to remove from list.
   final TextFieldGroup groupToRemove;
 
   @override

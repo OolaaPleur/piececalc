@@ -115,5 +115,21 @@
   "areYouSure": "Are you sure?",
   "selectColor": "Select color",
   "selectColorShade": "Select color shade",
-  "selectedColorAndItsShades": "Selected color and its shades"
+  "selectedColorAndItsShades": "Selected color and its shades",
+  "editWork": "Edit work",
+  "commentForTask": "Comment for task",
+
+  "worksHasntBeenArchivedYetToArchiveWorkTapThreedot": "Works hasn't been archived yet. To archive work - tap three-dot menu on work list tile and tap 'Archive'",
+  "archivedWorksArentShowingInAddTaskWorkSuggestions": "Archived works aren't showing in add task work suggestions",
+  "archiveHeader": "Archive:",
+  "archiveThreeDotMenu": "Archive",
+  "unarchiveThreeDotMenu": "Unarchive",
+  "deleteThreeDotMenu": "Delete",
+  "backupOfMyData": "Backup of my data",
+  "hereIsMyBackupFromPiececalc": "Here is my backup from PieceCalc.",
+  "light": "Light",
+  "auto": "Auto",
+  "dark": "Dark",
+  "chartGuideDaysOnTheXaxisMoneyEarnedOnThe": "🔍 Chart Guide: Days on the x-axis. Money earned on the y-axis.",
+  "totalEarned": "Total earned"
 }

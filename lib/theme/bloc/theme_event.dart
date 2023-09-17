@@ -5,19 +5,12 @@ abstract class ThemeEvent {}
 
 /// Toggle another theme, button located in settings.
 class ChangeThemeEvent extends ThemeEvent {
-  ChangeThemeEvent({required this.themeState});
+  /// Constructor for [ChangeThemeEvent].
+  ChangeThemeEvent({required this.appTheme});
 
-  final ThemeState themeState;
+  /// AppTheme, needed to determine which theme to enable.
+  final AppTheme appTheme;
 }
 
 /// Load theme at the start of an app.
 class LoadThemeEvent extends ThemeEvent {}
-
-/// Toggle theme from downloaded data.
-class ToggleDownloadedThemeEvent extends ThemeEvent {
-  /// Constructor for [ToggleDownloadedThemeEvent].
-  ToggleDownloadedThemeEvent({required this.theme});
-
-  /// AppTheme enum property, specifies which theme to toggle, dark, light or auto.
-  final AppTheme theme;
-}

@@ -6,9 +6,10 @@ import 'package:piececalc/l10n/l10n.dart';
 
 import '../../../data/models/composite_task_info.dart';
 import '../../../data/models/work.dart';
+import '../../../theme/theme_constants.dart';
 import '../../tasks/tasks_bloc.dart';
 import '../../tasks/widgets/row_of_bottom_form_buttons.dart';
-import 'task_editor_bloc.dart';
+import 'bloc/task_editor_bloc.dart';
 import 'widgets/action_buttons.dart';
 import 'widgets/amount_text_field.dart';
 import 'widgets/time_picker_widget.dart';
@@ -75,13 +76,15 @@ class _TaskEditorState extends State<TaskEditor> {
             TimeOfDay(hour: hour, minute: minute);
       }
       userSelectedDate = dateCreated;
+      final textFieldGroup = context.read<TaskEditorBloc>().state.textFieldGroup.first;
       dateController.text = dateCreated.toIso8601String().split('T').first;
-      context.read<TaskEditorBloc>().state.textFieldGroup.first.matchedWork =
-          widget.editedObject!.work;
-      context.read<TaskEditorBloc>().state.textFieldGroup.first.amountController.text =
-          widget.editedObject!.completedTask.amount;
-      context.read<TaskEditorBloc>().state.textFieldGroup.first.typeAheadController.text =
-          widget.editedObject!.work.workName;
+      textFieldGroup.matchedWork = widget.editedObject!.work;
+      textFieldGroup.amountController.text = widget.editedObject!.completedTask.amount;
+      textFieldGroup.typeAheadController.text = widget.editedObject!.work.workName;
+      textFieldGroup.commentController.text = widget.editedObject!.completedTask.comment;
+      if (textFieldGroup.commentController.text.isNotEmpty) {
+        textFieldGroup.commentTextFieldEnabled = true;
+      }
     }
   }
 
@@ -141,7 +144,8 @@ class _TaskEditorState extends State<TaskEditor> {
                 );
               }
               if (state is TaskEditorWorksLoaded) {
-                final loadedList = state.workData;
+                final loadedList =
+                    state.workData.where((work) => work.isArchived == false).toList();
                 return Form(
                   key: _formKey,
                   child: ListView(
@@ -178,19 +182,54 @@ class _TaskEditorState extends State<TaskEditor> {
 
                           return Column(
                             children: [
-                              WorkPicker(
-                                group: group,
-                                context: context,
-                                state: state,
-                                loadedList: loadedList,
-                                suggestionPicked: (Work suggestion) {
-                                  setState(() {
-                                    group.typeAheadController.text = suggestion.workName;
-                                    group.globalKey.currentState?.validate();
-                                    group.amountFocusNode.requestFocus();
-                                  });
-                                },
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 5,
+                                    child: WorkPicker(
+                                      group: group,
+                                      context: context,
+                                      state: state,
+                                      loadedList: loadedList,
+                                      suggestionPicked: (Work suggestion) {
+                                        setState(() {
+                                          group.typeAheadController.text = suggestion.workName;
+                                          group.globalKey.currentState?.validate();
+                                          group.amountFocusNode.requestFocus();
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 16),
+                                      child: IconButton.filled(
+                                        onPressed: () {
+                                          setState(() {
+                                            group.commentTextFieldEnabled =
+                                                !group.commentTextFieldEnabled;
+                                          });
+                                        },
+                                        icon: const Icon(Icons.chat),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
+                              if (group.commentTextFieldEnabled)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: textFieldHorizontalPadding,
+                                    vertical: textFieldVerticalPadding,
+                                  ),
+                                  child: TextFormField(
+                                    focusNode: group.commentFocusNode,
+                                    controller: group.commentController,
+                                    decoration: InputDecoration(labelText: context.l10n.commentForTask),
+                                  ),
+                                )
+                              else
+                                const SizedBox(),
                               Row(
                                 children: [
                                   if (group.matchedWork?.paymentType ==
@@ -217,7 +256,11 @@ class _TaskEditorState extends State<TaskEditor> {
                           );
                         },
                       ),
-                      RowOfBottomFormButtons(formKey: _formKey, dateController: dateController, widget: widget),
+                      RowOfBottomFormButtons(
+                        formKey: _formKey,
+                        dateController: dateController,
+                        editedObject: widget.editedObject,
+                      ),
                     ],
                   ),
                 );

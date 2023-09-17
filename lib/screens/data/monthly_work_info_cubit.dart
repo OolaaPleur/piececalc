@@ -23,6 +23,7 @@ import '../../utils/helpers.dart';
 /// This serves as a foundation for all specific states related to loading,
 /// displaying, and manipulating monthly work information.
 abstract class MonthlyWorkInfoState {
+  /// Constructor for [MonthlyWorkInfoState].
   MonthlyWorkInfoState({required this.workData});
 
   /// Map containing the work items and their corresponding summaries.
@@ -33,11 +34,13 @@ abstract class MonthlyWorkInfoState {
 ///
 /// Typically, this is the state before any data loading or operations have taken place.
 class Initial extends MonthlyWorkInfoState {
+  /// Constructor for [Initial].
   Initial() : super(workData: {});
 }
 
 /// Represents the state when the `MonthlyWorkInfo` data is being loaded.
 class Loading extends MonthlyWorkInfoState {
+  /// Constructor for [Loading].
   Loading({required super.workData});
 }
 
@@ -46,23 +49,30 @@ class Loading extends MonthlyWorkInfoState {
 /// Contains a map of work items and their respective summaries.
 class DataLoaded extends MonthlyWorkInfoState {
   /// Constructor for [DataLoaded].
-  DataLoaded(this.compositeTaskInfo, {required super.workData, required this.month, required this.year, required this.completedTasks});
+  DataLoaded(this.compositeTaskInfo, {required super.workData, required this.month, required this.year, required this.completedTasks, required this.totalCombinedPrice});
 
   /// Composite object of 'Work' and 'Task', needed in case user
   /// wants to share data about current month work.
   final List<CompositeTaskInfo> compositeTaskInfo;
+  /// Month, for which data is loaded.
   final int month;
+  /// Year, for which data is loaded.
   final int year;
+  /// List of completed tasks for this date period.
   final List<CompletedTask> completedTasks;
+  /// Combined price for this date period.
+  final double totalCombinedPrice;
 }
 
 /// Represents the state when a work item is being deleted from the `MonthlyWorkInfo`.
 class Deleting extends MonthlyWorkInfoState {
+  /// Constructor for [Deleting].
   Deleting({required super.workData});
 }
 
 /// Represents the state after a work item has been successfully deleted from the `MonthlyWorkInfo`.
 class Deleted extends MonthlyWorkInfoState {
+  /// Constructor for [Deleted].
   Deleted({required super.workData});
 }
 
@@ -116,7 +126,10 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
         return CompositeTaskInfo(completedTask: doneWork, work: correspondingWork);
       }).toList();
 
-      final workSummaryByWorkId = <Work, WorkSummary>{};
+      var workSummaryByWorkId = <Work, WorkSummary>{};
+
+// Introducing the new variable to store the total combined price of all tasks
+      var totalCombinedPrice = 0.0;
 
       for (final composite in compositeTasks) {
         final work = composite.work;
@@ -124,6 +137,8 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
           final addedAmount = double.tryParse(composite.completedTask.amount) ?? 0.0;
           final workPrice = work.price;
           final combinedPrice = addedAmount * workPrice;
+
+          totalCombinedPrice += combinedPrice; // Increment the total combined price
 
           if (!workSummaryByWorkId.containsKey(work)) {
             workSummaryByWorkId[work] =
@@ -140,6 +155,8 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
           final timeString = composite.completedTask.amount;
           final hourlyRate = work.price;
           final earnings = Helpers.calculateEarnings(timeString, hourlyRate);
+
+          totalCombinedPrice += earnings; // Increment the total combined price
 
           if (!workSummaryByWorkId.containsKey(work)) {
             workSummaryByWorkId[work] = WorkSummary(amount: timeString, combinedPrice: earnings);
@@ -160,11 +177,16 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
           }
         }
       }
+
+      final sortedEntries = workSummaryByWorkId.entries.toList()
+        ..sort((a, b) => b.value.combinedPrice.compareTo(a.value.combinedPrice));  // Sort descending by combinedPrice
+      workSummaryByWorkId = Map.fromEntries(sortedEntries);
+
       if (compositeTasks.isEmpty) {
-        emit(DataLoaded(workData: {}, month: month, year: year, [],completedTasks: []));
+        emit(DataLoaded(workData: {}, month: month, year: year, [],completedTasks: [], totalCombinedPrice: 0));
         return;
       }
-      emit(DataLoaded(workData: workSummaryByWorkId, month: month, year: year, compositeTasks, completedTasks: completedTasks));
+      emit(DataLoaded(workData: workSummaryByWorkId, month: month, year: year, compositeTasks, completedTasks: completedTasks, totalCombinedPrice: totalCombinedPrice));
     } catch (error) {
       log.log(Level.WARNING, error.toString());
       emit(DataError(error.toString(), workData: {}));

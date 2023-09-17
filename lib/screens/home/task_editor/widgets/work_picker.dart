@@ -5,7 +5,7 @@ import 'package:piececalc/l10n/l10n.dart';
 
 import '../../../../data/models/work.dart';
 import '../../../../theme/theme_constants.dart';
-import '../task_editor_bloc.dart';
+import '../bloc/task_editor_bloc.dart';
 import '../text_field_group.dart';
 
 /// Represents a widget that displays a dropdown-like field for users to select a `Work` item.

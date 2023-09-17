@@ -9,8 +9,17 @@ import 'package:flutter/material.dart';
 class Work extends Equatable {
   /// Creates a new instance of [Work].
   ///
-  /// Requires [id], [workName], [paymentType], and [price] to be provided.
-  const Work({required this.id, required this.workName, required this.paymentType, required this.price, required this.orderIndex, required this.workColor});
+  /// Requires [id], [workName], [paymentType], [orderIndex],[workColor], [isArchived]
+  /// and [price] to be provided.
+  const Work({
+    required this.id,
+    required this.workName,
+    required this.paymentType,
+    required this.price,
+    required this.orderIndex,
+    required this.workColor,
+    required this.isArchived,
+  });
 
   /// Creates a new [Work] instance from a JSON map.
   factory Work.fromJson(Map<String, dynamic> json) {
@@ -18,11 +27,13 @@ class Work extends Equatable {
       id: json['id'].toString(),
       workName: json['workName'].toString(),
       paymentType: json['workType'].toString(),
-      price: double.tryParse(json['price'].toString()) ?? 0.0,
+      price: double.tryParse(json['price'].toString()) ?? 0,
       orderIndex: int.tryParse(json['orderIndex'].toString()) ?? 0,
       workColor: Color(int.tryParse(json['workColor'] as String) ?? 0xFF2196F3),
+      isArchived: json['isArchived'] == 1,
     );
   }
+
   /// Unique identifier for the work.
   final String id;
 
@@ -34,23 +45,20 @@ class Work extends Equatable {
 
   /// Price associated with the work.
   final double price;
+
+  /// Order index of work.
   final int orderIndex;
+
+  /// Work color.
   final Color workColor;
-  /// Converts the [Work] instance into a JSON map.
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'workName': workName,
-      'workType': paymentType,
-      'price': price,
-      'orderIndex': orderIndex,
-      'workColor': workColor,
-    };
-  }
+
+  /// Shows is work archived or not.
+  final bool isArchived;
 
   @override
-  List<Object> get props => [id, workName, paymentType, price, orderIndex, workColor];
+  List<Object> get props => [id, workName, paymentType, price, orderIndex, workColor, isArchived];
 
+  /// copyWith function on Work object.
   Work copyWith({
     String? id,
     String? workName,
@@ -58,6 +66,7 @@ class Work extends Equatable {
     double? price,
     int? orderIndex,
     Color? workColor,
+    bool? isArchived,
   }) {
     return Work(
       id: id ?? this.id,
@@ -66,6 +75,7 @@ class Work extends Equatable {
       price: price ?? this.price,
       orderIndex: orderIndex ?? this.orderIndex,
       workColor: workColor ?? this.workColor,
+      isArchived: isArchived ?? this.isArchived,
     );
   }
 }

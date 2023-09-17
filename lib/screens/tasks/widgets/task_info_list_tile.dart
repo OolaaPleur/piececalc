@@ -7,8 +7,8 @@ import '../../../constants/constants.dart';
 import '../../../data/models/composite_task_info.dart';
 import '../../../theme/theme_constants.dart';
 import '../../../utils/helpers.dart';
+import '../../home/task_editor/bloc/task_editor_bloc.dart';
 import '../../home/task_editor/task_editor.dart';
-import '../../home/task_editor/task_editor_bloc.dart';
 import '../tasks_bloc.dart';
 import 'price_text_widget.dart';
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../screens/home/task_editor/bloc/task_editor_bloc.dart';
 import '../screens/home/task_editor/task_editor.dart';
-import '../screens/home/task_editor/task_editor_bloc.dart';
 
+/// Class, defines different naavigations functions.
 class Navigation {
-  static void navigateToTaskEditor(BuildContext context, ) {
+  /// Navigate to [TaskEditor].
+  static void navigateToTaskEditor(BuildContext context) {
     context.read<TaskEditorBloc>().add(LoadWorkEvent());
     context.read<TaskEditorBloc>().add(TaskEditorCreateTextField());
     Navigator.push(

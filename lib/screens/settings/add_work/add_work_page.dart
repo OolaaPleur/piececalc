@@ -1,14 +1,17 @@
+import 'dart:math';
+
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
-import 'package:piececalc/screens/settings/add_work/helpers.dart';
-import 'package:piececalc/widgets/snackbar.dart';
+import 'package:piececalc/screens/settings/add_work/add_work_helpers.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../data/models/work.dart';
 import '../../../theme/theme_constants.dart';
-import 'add_work_cubit.dart';
+import 'cubit/add_work_cubit.dart';
+import 'widgets/archived_works_list.dart';
+import 'widgets/reorderable_list_of_works.dart';
 
 /// Page, where city could be selected by user.
 class AddWorkPage extends StatefulWidget {
@@ -29,7 +32,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
 
   @override
   void initState() {
-    dialogPickerColor = Colors.blue;
+    dialogPickerColor = colorList[random.nextInt(colorList.length)];
     if (widget.editedObject != null) {
       final edWorkType = widget.editedObject!.paymentType == 'piecewisePayment'
           ? PaymentType.piecewisePayment
@@ -42,304 +45,241 @@ class _AddWorkPageState extends State<AddWorkPage> {
     super.initState();
   }
 
+  // Define your list of colors
+  final List<Color> colorList = [
+    Colors.red,
+    Colors.blue,
+    Colors.green,
+    Colors.yellow,
+    Colors.purple,
+    Colors.orange,
+    Colors.brown,
+  ];
+
+  final random = Random();
+
   PaymentType workType = PaymentType.piecewisePayment;
   final TextEditingController workNameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AddWorkCubit, AddWorkState>(
       listener: (context, state) {
-        if (state is WorkDeleted) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBar(context, message: context.l10n.workDeleted).showSnackBar());
-        }
-        if (state is WorkCantBeDeleted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            AppSnackBar(context, message: context.l10n.workIsAlreadyUsedInTaskCantDelete)
-                .showSnackBar(),
-          );
-        }
         if (state is WorkCanBeDeleted) {
-          showAlertDialog(context, state.workToDelete);
+          AddWorkHelpers().showAlertDialog(context, state.workToDelete);
         }
         if (state is WorkSaved && widget.editedObject != null) {
           Navigator.pop(context);
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: Text(context.l10n.addNewWork)),
-        body: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: textFieldHorizontalPadding,
-                        vertical: textFieldVerticalPadding,
-                      ),
-                      child: TextFormField(
-                        textInputAction: TextInputAction.next,
-                        controller: workNameController,
-                        decoration: InputDecoration(labelText: context.l10n.workName),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.l10n.pleaseEnterWorkName;
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        RadioListTile(
-                          title: Text(context.l10n.pieceWork),
-                          value: PaymentType.piecewisePayment,
-                          groupValue: workType,
-                          onChanged: (value) {
-                            setState(() {
-                              workType = value!;
-                            });
-                          },
-                        ),
-                        RadioListTile(
-                          title: Text(context.l10n.hourWork),
-                          value: PaymentType.hourlyPayment,
-                          groupValue: workType,
-                          onChanged: (value) {
-                            setState(() {
-                              workType = value!;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
+        appBar: AppBar(
+          title: widget.editedObject == null
+              ? Text(context.l10n.addNewWork)
+              : Text(context.l10n.editWork),
+        ),
+        body: BlocBuilder<AddWorkCubit, AddWorkState>(
+          buildWhen: (previous, current) {
+            return current is WorksLoaded;
+          },
+          builder: (context, state) {
+            if (state is WorksLoaded) {
+              final active = state.workData.where((work) => work.isArchived == false).toList()
+                ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+              return CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: textFieldHorizontalPadding,
                               vertical: textFieldVerticalPadding,
                             ),
                             child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              controller: priceController,
-                              decoration: InputDecoration(
-                                labelText: workType == PaymentType.piecewisePayment
-                                    ? context.l10n.priceForOnePiece
-                                    : context.l10n.priceForOneHour,
-                              ),
+                              textInputAction: TextInputAction.next,
+                              controller: workNameController,
+                              decoration: InputDecoration(labelText: context.l10n.workName),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return context.l10n.pleaseEnterAPrice;
-                                }
-                                if (!numericPattern.hasMatch(value)) {
-                                  return context.l10n.pleaseEnterAValidNumber;
+                                  return context.l10n.pleaseEnterWorkName;
                                 }
                                 return null;
                               },
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: textFieldHorizontalPadding,
-                            top: textFieldVerticalPadding,
-                            bottom: textFieldVerticalPadding,
+                          Column(
+                            children: [
+                              RadioListTile(
+                                title: Text(context.l10n.pieceWork),
+                                value: PaymentType.piecewisePayment,
+                                groupValue: workType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    workType = value!;
+                                  });
+                                },
+                              ),
+                              RadioListTile(
+                                title: Text(context.l10n.hourWork),
+                                value: PaymentType.hourlyPayment,
+                                groupValue: workType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    workType = value!;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
-                          child: ColorIndicator(
-                            width: 44,
-                            height: 44,
-                            borderRadius: 100,
-                            color: dialogPickerColor,
-                            onSelectFocus: false,
-                            onSelect: () async {
-                              // Store current color before we open the dialog.
-                              final colorBeforeDialog = dialogPickerColor;
-                              // Wait for the picker to close, if dialog was dismissed,
-                              // then restore the color we had before it was opened.
-                              if (!(await colorPickerDialog())) {
-                                setState(() {
-                                  dialogPickerColor = colorBeforeDialog;
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    Builder(
-                      builder: (context) {
-                        return ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: saveButtonHorizontalPadding,
-                              vertical: saveButtonVerticalPadding,
-                            ),
-                          ),
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
-
-                            if (_formKey.currentState!.validate()) {
-                              // Check if form is valid
-                              final dataToSave = AddWorkHelpers.convertTextFieldsDataToWork(
-                                editedObject: widget.editedObject,
-                                workName: workNameController.text.trim(),
-                                workType: workType,
-                                priceController: priceController,
-                                workColor: dialogPickerColor,
-                              );
-                              if (widget.editedObject == null) {
-                                context.read<AddWorkCubit>().saveData(dataToSave);
-                              } else {
-                                context.read<AddWorkCubit>().saveData(dataToSave, isEditing: true);
-                              }
-                              workNameController.text = '';
-                              priceController.text = '';
-                              setState(() {
-                                dialogPickerColor = Colors.blue;
-                              });
-                            }
-                          },
-                          child: Text(context.l10n.save),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            if (widget.editedObject == null)
-              BlocBuilder<AddWorkCubit, AddWorkState>(
-                buildWhen: (previous, current) {
-                  return current is WorksLoaded;
-                },
-                builder: (context, state) {
-                  if (state is WorksLoaded) {
-                    return SliverReorderableList(
-                      itemCount: state.workData.length,
-                      itemBuilder: (context, index) {
-                        return Material(
-                          key: ValueKey(state.workData[index].id),
-                          child: ListTile(
-                            onTap: () {
-                              final cubit = context.read<AddWorkCubit>();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (context) => BlocProvider.value(
-                                    value: cubit,
-                                    child: AddWorkPage(editedObject: state.workData[index]),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: textFieldHorizontalPadding,
+                                    vertical: textFieldVerticalPadding,
+                                  ),
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    controller: priceController,
+                                    decoration: InputDecoration(
+                                      labelText: workType == PaymentType.piecewisePayment
+                                          ? context.l10n.priceForOnePiece
+                                          : context.l10n.priceForOneHour,
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return context.l10n.pleaseEnterAPrice;
+                                      }
+                                      if (!numericPattern.hasMatch(value)) {
+                                        return context.l10n.pleaseEnterAValidNumber;
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
-                              );
-                            },
-                            leading: ReorderableDragStartListener(
-                              index: index,
-                              child: const Icon(Icons.drag_handle),
-                            ),
-                            title: Text(state.workData[index].workName),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('${context.l10n.earned}: ${state.workData[index].price}'),
-                                ColorIndicator(
-                                  width: 30,
-                                  height: 30,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  right: textFieldHorizontalPadding,
+                                  top: textFieldVerticalPadding,
+                                  bottom: textFieldVerticalPadding,
+                                ),
+                                child: ColorIndicator(
+                                  width: 44,
+                                  height: 44,
                                   borderRadius: 100,
-                                  color: state.workData[index].workColor,
+                                  color: dialogPickerColor,
                                   onSelectFocus: false,
-                                ),
-                                const Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                IconButton(
-                                  onPressed: () {
-                                    context
-                                        .read<AddWorkCubit>()
-                                        .checkDeletionPossibility(state.workData[index]);
+                                  onSelect: () async {
+                                    // Store current color before we open the dialog.
+                                    final colorBeforeDialog = dialogPickerColor;
+                                    // Wait for the picker to close, if dialog was dismissed,
+                                    // then restore the color we had before it was opened.
+                                    if (!(await colorPickerDialog())) {
+                                      setState(() {
+                                        dialogPickerColor = colorBeforeDialog;
+                                      });
+                                    }
                                   },
-                                  icon: Icon(
-                                    Icons.delete,
-                                    size: deleteIconSize,
-                                    color: Theme.of(context).colorScheme.error,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Builder(
+                            builder: (context) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10, top: 10),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Theme.of(context).colorScheme.primary,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: saveButtonHorizontalPadding,
+                                      vertical: saveButtonVerticalPadding,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    FocusScope.of(context).unfocus();
+
+                                    if (_formKey.currentState!.validate()) {
+                                      // Check if form is valid
+                                      final dataToSave = AddWorkHelpers.convertTextFieldsDataToWork(
+                                        editedObject: widget.editedObject,
+                                        workName: workNameController.text.trim(),
+                                        workType: workType,
+                                        priceController: priceController,
+                                        workColor: dialogPickerColor,
+                                      );
+                                      if (widget.editedObject == null) {
+                                        context.read<AddWorkCubit>().saveData(dataToSave);
+                                      } else {
+                                        context
+                                            .read<AddWorkCubit>()
+                                            .saveData(dataToSave, isEditing: true);
+                                      }
+                                      workNameController.text = '';
+                                      priceController.text = '';
+                                      if (widget.editedObject == null) {
+                                        setState(() {
+                                          dialogPickerColor =
+                                              colorList[random.nextInt(colorList.length)];
+                                        });
+                                      }
+                                    }
+                                  },
+                                  child: Text(
+                                    context.l10n.save,
+                                    style: TextStyle(
+                                      fontSize: Theme.of(context).textTheme.labelSmall!.fontSize,
+                                      color: Theme.of(context).colorScheme.onTertiary,
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                      onReorder: (oldIndex, newIndex) {
-                        if (newIndex > oldIndex) {
-                          newIndex -= 1;
-                        }
-                        final item = state.workData.removeAt(oldIndex);
-                        state.workData.insert(newIndex, item);
-
-                        // Create a new list with updated orderIndex for each item
-                        final updatedWorkData = <Work>[];
-                        for (var i = 0; i < state.workData.length; i++) {
-                          updatedWorkData.add(state.workData[i].copyWith(orderIndex: i));
-                        }
-                        // Save the new order to the database
-                        context.read<AddWorkCubit>().saveOrder(updatedWorkData);
-                      },
-                    );
-                  }
-                  // Consider returning a different Sliver widget for other states
-                  return const SliverToBoxAdapter(child: SizedBox.shrink());
-                },
-              )
-            else
-              const SliverToBoxAdapter(child: SizedBox.shrink()),
-          ],
+                          const Divider(
+                            thickness: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (widget.editedObject == null)
+                    ReorderableListOfWorks(active: active)
+                  else
+                    const SliverToBoxAdapter(child: SizedBox.shrink()),
+                  const SliverToBoxAdapter(
+                    child: Divider(),
+                  ),
+                  if (widget.editedObject == null)
+                    ArchivedWorksList(tooltipKey: tooltipKey)
+                  else
+                    const SliverToBoxAdapter(child: SizedBox.shrink()),
+                ],
+              );
+            }
+            return const SizedBox.shrink();
+          },
         ),
       ),
     );
   }
 
-  void showAlertDialog(BuildContext context, Work work) {
-    // set up the buttons
-    final Widget cancelButton = TextButton(
-      child: Text(context.l10n.yes),
-      onPressed: () {
-        context.read<AddWorkCubit>().deleteWork(work);
-        Navigator.pop(context);
-      },
-    );
-    final Widget continueButton = TextButton(
-      child: Text(context.l10n.no),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-
-    // set up the AlertDialog
-    final alert = AlertDialog(
-      title: Text(context.l10n.workDeletion),
-      content: Text(context.l10n.wouldYouLikeToDeleteThisWork),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   Future<bool> colorPickerDialog() async {
     return ColorPicker(
+      actionButtons: const ColorPickerActionButtons(
+        dialogOkButtonType: ColorPickerActionButtonType.elevated,
+        dialogCancelButtonType: ColorPickerActionButtonType.elevated,
+        dialogActionIcons: true,
+      ),
       color: dialogPickerColor,
       onColorChanged: (Color color) => setState(() => dialogPickerColor = color),
       borderRadius: 4,
@@ -376,8 +316,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
       },
     ).showPickerDialog(
       context,
-      actionsPadding: const EdgeInsets.all(16),
-      constraints: const BoxConstraints(minHeight: 480, minWidth: 300, maxWidth: 320),
+      buttonPadding: const EdgeInsets.all(4),
     );
   }
 }

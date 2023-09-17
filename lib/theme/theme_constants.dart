@@ -34,9 +34,9 @@ const iconPadding = 10.0;
 
 /// ADDWORK PAGE STYLE BELOW
 /// Save button horizontal padding.
-const saveButtonHorizontalPadding = 40.0;
+const saveButtonHorizontalPadding = 30.0;
 /// Save button vertical padding.
-const saveButtonVerticalPadding = 20.0;
+const saveButtonVerticalPadding = 10.0;
 /// Delete icon size.
 const deleteIconSize = 30.0;
 

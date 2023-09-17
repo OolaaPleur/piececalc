@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
 import 'package:piececalc/screens/settings/settings.dart';
 import '../../utils/navigation.dart';
+import '../../widgets/snackbar.dart';
 import '../data/monthly_work_info.dart';
 import '../data/monthly_work_info_cubit.dart';
+import '../settings/add_work/cubit/add_work_cubit.dart';
 import '../tasks/tasks.dart';
-import 'home_bloc.dart';
+import 'bloc/home_bloc.dart';
 
 /// [Home] widget serves as the main screen of the application.
 ///
@@ -40,14 +42,27 @@ class _HomeState extends State<Home> {
   }
 
   static final List<Widget> _pages = <Widget>[
-    MonthlyWorkInfo(),
+    const MonthlyWorkInfo(),
     const Tasks(),
     const Settings(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<AddWorkCubit, AddWorkState>(
+      listener: (context, state) {
+        if (state is WorkDeleted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              AppSnackBar(context, message: context.l10n.workDeleted).showSnackBar(),);
+        }
+        if (state is WorkCantBeDeleted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            AppSnackBar(context, message: context.l10n.workIsAlreadyUsedInTaskCantDelete)
+                .showSnackBar(),
+          );
+        }
+      },
+  child: Scaffold(
       appBar: AppBar(
         title: Text(
           context.l10n.piececalc,
@@ -145,6 +160,7 @@ class _HomeState extends State<Home> {
             ),
         ],
       ),
-    );
+    ),
+);
   }
 }

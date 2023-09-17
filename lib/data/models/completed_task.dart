@@ -16,6 +16,7 @@ class CompletedTask extends Equatable {
     required this.workId,
     required this.amount,
     required this.dateCreated,
+    required this.comment,
   });
 
   /// Creates a new [CompletedTask] instance from a JSON map.
@@ -25,6 +26,7 @@ class CompletedTask extends Equatable {
       workId: json['workId'].toString(),
       amount: json['amount'].toString(),
       dateCreated: json['dateCreated'].toString(),
+      comment: json['comment'].toString(),
     );
   }
 
@@ -39,7 +41,9 @@ class CompletedTask extends Equatable {
 
   /// Date when the task was accomplished.
   final String dateCreated;
+  /// User comment on task.
+  final String comment;
 
   @override
-  List<Object> get props => [id, workId, amount, dateCreated];
+  List<Object> get props => [id, workId, amount, dateCreated, comment];
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:piececalc/constants/constants.dart';
-import 'package:piececalc/theme/extensions.dart';
+import 'package:piececalc/theme/theme_helpers.dart';
 
 import '../../data/repositories/settings_repository.dart';
 import '../theme.dart';
@@ -20,21 +20,16 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
         super(LightThemeState()) {
     on<LoadThemeEvent>(_onLoadThemeEvent);
     on<ChangeThemeEvent>(_onChangeThemeEvent);
-    on<ToggleDownloadedThemeEvent>(_onToggleDownloadedThemeEvent);
   }
 
   final SettingsRepository _settingsRepository;
 
   /// Checks if dark mode is enabled right now.
   bool get isDarkMode {
-    if (state.themeData.brightness == Brightness.light) {
-      return false;
+    if (state.themeData.brightness == Brightness.dark) {
+      return true;
     }
-    return true;
-  }
-
-  ThemeState get currentTheme {
-    return state;
+    return false;
   }
 
   /// Load theme at the start of an app.
@@ -43,8 +38,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     Emitter<ThemeState> emit,
   ) async {
     final theme = await _settingsRepository.getStringValue('theme');
-    final themeEnum = theme.toAppTheme();
-    add(ToggleDownloadedThemeEvent(theme: themeEnum));
+    add(ChangeThemeEvent(appTheme: ThemeHelper.toAppTheme(theme)));
   }
 
   /// Toggle another theme, button located in settings.
@@ -52,30 +46,15 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     ChangeThemeEvent event,
     Emitter<ThemeState> emit,
   ) async {
-    if (event.themeState is DarkThemeState) {
+    if (event.appTheme == AppTheme.dark) {
       emit(DarkThemeState());
       await _settingsRepository.setStringValue('theme', 'AppTheme.dark');
-    } else if (event.themeState is LightThemeState) {
+    } else if (event.appTheme == AppTheme.light) {
       emit(LightThemeState());
       await _settingsRepository.setStringValue('theme', 'AppTheme.light');
     } else {
       emit(AutoThemeState());
       await _settingsRepository.setStringValue('theme', 'AppTheme.auto');
-    }
-  }
-
-  /// Used to set theme in two cases 1) when downloaded user settings
-  /// 2) when theme set by user in [LoadThemeEvent].
-  Future<void> _onToggleDownloadedThemeEvent(
-    ToggleDownloadedThemeEvent event,
-    Emitter<ThemeState> emit,
-  ) async {
-    if (event.theme == AppTheme.dark) {
-      emit(DarkThemeState());
-    } else if (event.theme == AppTheme.light) {
-      emit(LightThemeState());
-    } else {
-      emit(AutoThemeState());
     }
   }
 }

@@ -83,6 +83,47 @@
   "addNewField": "Lisa uus väli",
 
   "hoursOnly": "{count, plural, =0{0 tundi} =1{1 tund} other{{count} tundi}}",
-  "minutesOnly": "{count, plural, =0{0 minutit} =1{1 minut} other{{count} minutit}}"
+  "minutesOnly": "{count, plural, =0{0 minutit} =1{1 minut} other{{count} minutit}}",
+  "couldNotLaunch": "Ei suutnud käivitada",
+  "rateUsOnGooglePlay": "Hinda meid Google Play's!",
+  "yourFeedbackMotivatesMeToMakeTheAppEvenBetter": "Sinu tagasiside motiveerib mind rakendust veelgi paremaks tegema!",
 
+  "done": "Valmis",
+
+  "introFirstScreenHeader": "Tere tulemast PieceCa(lc)'i \uD83D\uDCCA",
+  "introFirstScreenBody": "Sinu põhjalik vahend arvutamiseks, jälgimiseks ja töö korraldamiseks. Sukeldu ja avasta, kuidas saad oma tootlikkust tõsta!",
+  "introSecondScreenHeader": "Kohene töö arvutamine \uD83D\uDCB9",
+  "introSecondScreenBody": "Arvuta tehtud töö maht ühe klõpsuga ja saa kohe selge, organiseeritud ülevaade.",
+  "introSecondAndHalfScreenHeader": "Kuuline korraldus \uD83D\uDCC5",
+  "introSecondAndHalfScreenBody": "PieceCa(lc) abil sorteeritakse sinu ülesanded automaatselt kuude kaupa. See muudab sinu edusammude ülevaatamise ja jälgimise lihtsamaks kui kunagi varem.",
+  "introThirdScreenHeader": "Turvaline varundus \uD83D\uDEE1️",
+  "introThirdScreenBody": "Ära karda andmekadu. Looge kõigi oma andmete või mis tahes kuu konkreetsete ülesannete jaoks hõlpsasti varukoopiad.",
+  "introFourthScreenHeader": "Intuitiivne disain \uD83C\uDFA8",
+  "introFourthScreenBody": "Kasutajasõbralik liides on loodud mõeldes sinule. Liikuge hõlpsalt ja saavutage rohkem.",
+  "introFifthScreenHeader": "Hele ja tume režiim \uD83C\uDF13",
+  "introFifthScreenBody": "Valige oma vibe. Vaheta valge ja tumeda teema vahel vastavalt oma tujule või ümbrusele.",
+  "introSixthScreenHeader": "Valmis alustama? \uD83D\uDE80",
+  "introSixthScreenBody": "Sukeldu PieceCa(lc)'i ja alusta oma töö arvutamist täna organiseeritumalt ja tõhusamalt!",
+
+  "startTutorialAgain": "Alusta juhendit uuesti",
+  "areYouSure": "Oled sa kindel?",
+  "selectColor": "Vali värv",
+  "selectColorShade": "Vali värvi varjund",
+  "selectedColorAndItsShades": "Valitud värv ja selle varjundid",
+  "editWork": "Muuda tööd",
+  "commentForTask": "Kommentaar ülesandele",
+
+  "worksHasntBeenArchivedYetToArchiveWorkTapThreedot": "Tööd pole veel arhiveeritud. Arhiveerimiseks klõpsake tööloendi plaadil kolmepunktimenüül ja valige 'Arhiveeri'.",
+  "archivedWorksArentShowingInAddTaskWorkSuggestions": "Arhiveeritud töid ei kuvata ülesande lisamise ettepanekutes.",
+  "archiveHeader": "Arhiiv:",
+  "archiveThreeDotMenu": "Arhiveeri",
+  "unarchiveThreeDotMenu": "Eemalda arhiivist",
+  "deleteThreeDotMenu": "Kustuta",
+  "backupOfMyData": "Minu andmete varukoopia",
+  "hereIsMyBackupFromPiececalc": "Siin on minu varukoopia PieceCalc-st.",
+  "light": "Hele",
+  "auto": "Automaatne",
+  "dark": "Tume",
+  "chartGuideDaysOnTheXaxisMoneyEarnedOnThe": "🔍 Graafiku juhend: päevad x-teljel. Teenitud raha y-teljel.",
+  "totalEarned": "Kokku teenitud"
 }

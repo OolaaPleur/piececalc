@@ -22,8 +22,10 @@ class LanguageChange extends StatelessWidget {
       return Text(AppLocalizations.of(context)!.english);
     } else if (context.read<LanguageCubit>().state.languageCode == 'ru') {
       return Text(AppLocalizations.of(context)!.russian);
-    } else {
+    } else if (context.read<LanguageCubit>().state.languageCode == 'et') {
       return Text(AppLocalizations.of(context)!.estonian);
+    } else {
+      return Text(AppLocalizations.of(context)!.english);
     }
   }
 

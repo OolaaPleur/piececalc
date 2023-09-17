@@ -14,6 +14,9 @@ class SomeErrorHappened implements AppException {
   /// Constructor for [SomeErrorHappened].
   const SomeErrorHappened();
 }
+
+/// Exception that is thrown when Play Market page of app can't be opened.
 class CouldNotLaunch implements AppException {
+  /// Constructor for [CouldNotLaunch].
   const CouldNotLaunch();
 }

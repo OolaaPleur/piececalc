@@ -47,7 +47,7 @@ class AppSnackBar {
       ),
       //shape: const StadiumBorder(),
       //width: MediaQuery.of(context).size.width * 0.9,
-      dismissDirection: DismissDirection.none,
+      //dismissDirection: DismissDirection.down,
     );
   }
 }

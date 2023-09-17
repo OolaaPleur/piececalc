@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
-import 'package:piececalc/screens/home/task_editor/task_editor_bloc.dart';
+import 'package:piececalc/screens/home/task_editor/bloc/task_editor_bloc.dart';
 
 import '../../../../data/models/composite_task_info.dart';
 import '../../../../theme/theme_constants.dart';

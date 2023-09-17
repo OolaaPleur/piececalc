@@ -1062,6 +1062,156 @@ class S {
       args: [],
     );
   }
+
+  /// `Edit work`
+  String get editWork {
+    return Intl.message(
+      'Edit work',
+      name: 'editWork',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Comment for task`
+  String get commentForTask {
+    return Intl.message(
+      'Comment for task',
+      name: 'commentForTask',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Works hasn't been archived yet. To archive work - tap three-dot menu on work list tile and tap 'Archive'`
+  String get worksHasntBeenArchivedYetToArchiveWorkTapThreedot {
+    return Intl.message(
+      'Works hasn\'t been archived yet. To archive work - tap three-dot menu on work list tile and tap \'Archive\'',
+      name: 'worksHasntBeenArchivedYetToArchiveWorkTapThreedot',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Archived works aren't showing in add task work suggestions`
+  String get archivedWorksArentShowingInAddTaskWorkSuggestions {
+    return Intl.message(
+      'Archived works aren\'t showing in add task work suggestions',
+      name: 'archivedWorksArentShowingInAddTaskWorkSuggestions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Archive:`
+  String get archiveHeader {
+    return Intl.message(
+      'Archive:',
+      name: 'archiveHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Archive`
+  String get archiveThreeDotMenu {
+    return Intl.message(
+      'Archive',
+      name: 'archiveThreeDotMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unarchive`
+  String get unarchiveThreeDotMenu {
+    return Intl.message(
+      'Unarchive',
+      name: 'unarchiveThreeDotMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get deleteThreeDotMenu {
+    return Intl.message(
+      'Delete',
+      name: 'deleteThreeDotMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Backup of my data`
+  String get backupOfMyData {
+    return Intl.message(
+      'Backup of my data',
+      name: 'backupOfMyData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here is my backup from PieceCalc.`
+  String get hereIsMyBackupFromPiececalc {
+    return Intl.message(
+      'Here is my backup from PieceCalc.',
+      name: 'hereIsMyBackupFromPiececalc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get light {
+    return Intl.message(
+      'Light',
+      name: 'light',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auto`
+  String get auto {
+    return Intl.message(
+      'Auto',
+      name: 'auto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark`
+  String get dark {
+    return Intl.message(
+      'Dark',
+      name: 'dark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🔍 Chart Guide: Days on the x-axis. Money earned on the y-axis.`
+  String get chartGuideDaysOnTheXaxisMoneyEarnedOnThe {
+    return Intl.message(
+      '🔍 Chart Guide: Days on the x-axis. Money earned on the y-axis.',
+      name: 'chartGuideDaysOnTheXaxisMoneyEarnedOnThe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total earned`
+  String get totalEarned {
+    return Intl.message(
+      'Total earned',
+      name: 'totalEarned',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

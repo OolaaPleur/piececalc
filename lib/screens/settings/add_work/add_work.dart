@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
 
-import 'add_work_cubit.dart';
 import 'add_work_page.dart';
+import 'cubit/add_work_cubit.dart';
 
 /// Widget dropdown in Settings, changes city.
 class AddWork extends StatelessWidget {
@@ -19,7 +19,7 @@ class AddWork extends StatelessWidget {
         return Card(
           child: ListTile(
             onTap: () {
-              final cubit = context.read<AddWorkCubit>();
+              final cubit = context.read<AddWorkCubit>()..loadWorks();
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(

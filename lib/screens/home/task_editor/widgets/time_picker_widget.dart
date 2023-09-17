@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:piececalc/l10n/l10n.dart';
 
 import '../../../../theme/theme_constants.dart';
-import '../../../../utils/helpers.dart';
 import '../text_field_group.dart';
 
 /// Widget that defines time picker (if work is hourlyPayment).
@@ -45,11 +44,9 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
               },
             );
             if (picked != null && picked != widget.group.time) {
-              if (Helpers.isValidTime(picked)) {
-                setState(() {
-                  widget.group.time = picked;
-                });
-              }
+              setState(() {
+                widget.group.time = picked;
+              });
             }
           },
           child: Text(context.l10n.selectTime),

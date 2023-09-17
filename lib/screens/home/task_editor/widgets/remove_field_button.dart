@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
-import 'package:piececalc/screens/home/task_editor/task_editor_bloc.dart';
+import 'package:piececalc/screens/home/task_editor/bloc/task_editor_bloc.dart';
 import 'package:piececalc/screens/home/task_editor/text_field_group.dart';
 
 import '../../../../theme/theme_constants.dart';
@@ -11,6 +11,7 @@ class RemoveFieldButton extends StatelessWidget {
   /// Constructor for [RemoveFieldButton].
   const RemoveFieldButton({required this.groupToRemove, super.key});
 
+  /// Defines group of text fields, which needs to be removed.
   final TextFieldGroup groupToRemove;
 
   @override
@@ -24,8 +25,12 @@ class RemoveFieldButton extends StatelessWidget {
           ),
           child: ElevatedButton(
             onPressed: () {
-              context.read<TaskEditorBloc>().add(TasksEditorRemoveTextField(group: groupToRemove));
+              context.read<TaskEditorBloc>().add(TaskEditorRemoveTextField(group: groupToRemove));
             },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Colors.white,
+            ),
             child: Text(context.l10n.removeField),
           ),
         );

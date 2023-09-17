@@ -1,6 +1,7 @@
 import '../../../constants/constants.dart';
 import '../../../theme/bloc/theme_bloc.dart';
 
+/// Converts state object in enum.
 AppTheme convertStateInEnum (ThemeState state) {
   if (state is LightThemeState) {
     return AppTheme.light;
@@ -9,13 +10,4 @@ AppTheme convertStateInEnum (ThemeState state) {
     return AppTheme.dark;
   }
   return AppTheme.auto;
-}
-ThemeState convertEnumInState (AppTheme appTheme) {
-  if (appTheme == AppTheme.light) {
-    return LightThemeState();
-  }
-  if (appTheme == AppTheme.dark) {
-    return DarkThemeState();
-  }
-  return AutoThemeState();
 }

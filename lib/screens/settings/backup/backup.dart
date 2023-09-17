@@ -21,7 +21,8 @@ class Backup extends StatelessWidget {
     return Card(
       child: ListTile(
         onTap: () async {
-          await _backupService.createBackupAndShare();
+          await _backupService.createBackupAndShare(
+              subject: context.l10n.backupOfMyData, text: context.l10n.hereIsMyBackupFromPiececalc,);
         },
         title: Text(context.l10n.backup),
         leading: const Icon(Icons.storage),

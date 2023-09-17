@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
+import 'package:piececalc/screens/tasks/tasks_helper.dart';
 
+import '../../../data/models/composite_task_info.dart';
 import '../../../theme/theme_constants.dart';
-import '../../../utils/helpers.dart';
-import '../../home/task_editor/task_editor.dart';
-import '../../home/task_editor/task_editor_bloc.dart';
+import '../../home/task_editor/bloc/task_editor_bloc.dart';
 
+/// Widget defines how save and add new field buttons looks like.
 class RowOfBottomFormButtons extends StatelessWidget {
+  /// Constructor for [RowOfBottomFormButtons].
   const RowOfBottomFormButtons({
-    required GlobalKey<FormState> formKey, required this.dateController, required this.widget, super.key,
+    required GlobalKey<FormState> formKey, required this.dateController, required this.editedObject, super.key,
   }) : _formKey = formKey;
 
   final GlobalKey<FormState> _formKey;
+  /// Contains date.
   final TextEditingController dateController;
-  final TaskEditor widget;
+  /// Edited object, if present.
+  final CompositeTaskInfo? editedObject;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +31,20 @@ class RowOfBottomFormButtons extends StatelessWidget {
             vertical: textFieldVerticalPadding,
           ),
           child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              padding: const EdgeInsets.symmetric(
+                horizontal: saveButtonHorizontalPadding,
+                vertical: saveButtonVerticalPadding,
+              ),
+            ),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 final fieldList = <Map<String, dynamic>>[];
                 for (final textFields
                 in context.read<TaskEditorBloc>().state.textFieldGroup) {
                   fieldList.add(
-                    Helpers.convertDataFromTextFieldsIntoMap(
+                    TasksHelper.convertDataFromTextFieldsIntoMap(
                       amount: textFields.amountController.text.trim(),
                       dateCreated: dateController.text.trim(),
                       workId: textFields.matchedWork!.id,
@@ -42,11 +53,12 @@ class RowOfBottomFormButtons extends StatelessWidget {
                       context: context,
                       textFieldGroups:
                       context.read<TaskEditorBloc>().state.textFieldGroup,
-                      editedObject: widget.editedObject,
+                      editedObject: editedObject,
+                      comment: textFields.commentController.text.trim(),
                     ),
                   );
                 }
-                if (widget.editedObject == null) {
+                if (editedObject == null) {
                   context
                       .read<TaskEditorBloc>()
                       .add(SaveTaskEvent(fieldList, isEditing: false));
@@ -57,10 +69,16 @@ class RowOfBottomFormButtons extends StatelessWidget {
                 }
               }
             },
-            child: Text(context.l10n.save),
+            child: Text(
+              context.l10n.save,
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.labelSmall!.fontSize,
+                color: Theme.of(context).colorScheme.onTertiary,
+              ),
+            ),
           ),
         ),
-        if (widget.editedObject == null)
+        if (editedObject == null)
           Expanded(
             child: Builder(
               builder: (context) {
