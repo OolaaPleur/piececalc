@@ -90,10 +90,11 @@ class _HomeState extends State<Home> {
         currentIndex: _activePage,
         //New
         onTap: (index) {
+          Curve curve = (index - _activePage).abs() == 1 ? Curves.easeInOut : Curves.linear;
           _pageViewController.animateToPage(
             index,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.bounceOut,
+            duration: const Duration(milliseconds: 300),
+            curve: curve,
           );
         },
       ),
