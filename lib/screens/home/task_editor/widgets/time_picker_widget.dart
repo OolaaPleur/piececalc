@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:piececalc/l10n/l10n.dart';
 
 import '../../../../theme/theme_constants.dart';
+import '../../../tasks/tasks_helper.dart';
 import '../text_field_group.dart';
 
 /// Widget that defines time picker (if work is hourlyPayment).
@@ -17,8 +18,6 @@ class TimePickerWidget extends StatefulWidget {
 }
 
 class _TimePickerWidgetState extends State<TimePickerWidget> {
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +26,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
         Padding(
           padding: const EdgeInsets.only(bottom: timePickerPadding),
           child: Text(
-            widget.group.time.format(context),
+            TasksHelper.formatTimeOfDay(widget.group.time),
             style: TextStyle(fontSize: Theme.of(context).textTheme.titleLarge!.fontSize),
           ),
         ),
@@ -35,6 +34,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
           onPressed: () async {
             final picked = await showTimePicker(
               context: context,
+              useRootNavigator: false, // add this line
               initialTime: widget.group.time,
               builder: (BuildContext context, Widget? child) {
                 return MediaQuery(

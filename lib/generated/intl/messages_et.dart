@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m1(count) => "${Intl.plural(count, zero: '0 minutit', one: '1 minut', other: '${count} minutit')}";
 
+  static m2(date) => "Siin on minu kuu ülesannete varukoopia ${date} PieceCalc\'ist.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "addDoneWork" : MessageLookupByLibrary.simpleMessage("Lisa tehtud töö"),
@@ -53,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "earned" : MessageLookupByLibrary.simpleMessage("Hind"),
     "editTask" : MessageLookupByLibrary.simpleMessage("Muuda ülesannet"),
     "editWork" : MessageLookupByLibrary.simpleMessage("Muuda tööd"),
-    "emailToMe" : MessageLookupByLibrary.simpleMessage("Saada mulle e-kiri!"),
+    "emailToMe" : MessageLookupByLibrary.simpleMessage("Küsimused? Kirjuta mulle e-posti teel!"),
     "english" : MessageLookupByLibrary.simpleMessage("Inglise"),
     "enterDate" : MessageLookupByLibrary.simpleMessage("Sisestage kuupäev"),
     "error" : MessageLookupByLibrary.simpleMessage("Viga"),
@@ -66,7 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hoursOnly" : m0,
     "introFifthScreenBody" : MessageLookupByLibrary.simpleMessage("Valige oma vibe. Vaheta valge ja tumeda teema vahel vastavalt oma tujule või ümbrusele."),
     "introFifthScreenHeader" : MessageLookupByLibrary.simpleMessage("Hele ja tume režiim 🌓"),
-    "introFirstScreenBody" : MessageLookupByLibrary.simpleMessage("Sinu põhjalik vahend arvutamiseks, jälgimiseks ja töö korraldamiseks. Sukeldu ja avasta, kuidas saad oma tootlikkust tõsta!"),
+    "introFirstScreenBody" : MessageLookupByLibrary.simpleMessage("Teie hädavajalik kaaslane töö tulemuste jälgimiseks ja arvutamiseks. Unustage tüütu teenitud raha arvutamine — säästke aega PieceCa(lc)-ga."),
     "introFirstScreenHeader" : MessageLookupByLibrary.simpleMessage("Tere tulemast PieceCa(lc)\'i 📊"),
     "introFourthScreenBody" : MessageLookupByLibrary.simpleMessage("Kasutajasõbralik liides on loodud mõeldes sinule. Liikuge hõlpsalt ja saavutage rohkem."),
     "introFourthScreenHeader" : MessageLookupByLibrary.simpleMessage("Intuitiivne disain 🎨"),
@@ -117,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsBottomNavBarTitle" : MessageLookupByLibrary.simpleMessage("Seaded"),
     "settingsChangeTheme" : MessageLookupByLibrary.simpleMessage("Muuda teemat"),
     "shareMonthData" : MessageLookupByLibrary.simpleMessage("Jaga kuu andmeid"),
+    "shareSubjectText" : m2,
     "somethingWentWrong" : MessageLookupByLibrary.simpleMessage("Midagi läks valesti. Palun proovige uuesti."),
     "startTutorialAgain" : MessageLookupByLibrary.simpleMessage("Alusta juhendit uuesti"),
     "statsBottomNavBarTitle" : MessageLookupByLibrary.simpleMessage("Statistika"),

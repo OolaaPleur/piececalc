@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m1(count) => "${Intl.plural(count, zero: '0 минут', one: '1 минута', few: '${count} минуты', many: '${count} минут', other: '${count} минут')}";
 
+  static m2(date) => "Вот мой месячный бэкап заданий за ${date} из PieceCalc.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "addDoneWork" : MessageLookupByLibrary.simpleMessage("Добавить выполненную работу"),
@@ -53,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "earned" : MessageLookupByLibrary.simpleMessage("Цена"),
     "editTask" : MessageLookupByLibrary.simpleMessage("Редактировать задачу"),
     "editWork" : MessageLookupByLibrary.simpleMessage("Редактировать работу"),
-    "emailToMe" : MessageLookupByLibrary.simpleMessage("Напиши мне на почту!"),
+    "emailToMe" : MessageLookupByLibrary.simpleMessage("Есть вопросы? Напишите мне на электронную почту!"),
     "english" : MessageLookupByLibrary.simpleMessage("Английский"),
     "enterDate" : MessageLookupByLibrary.simpleMessage("Введите дату"),
     "error" : MessageLookupByLibrary.simpleMessage("Ошибка"),
@@ -66,7 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hoursOnly" : m0,
     "introFifthScreenBody" : MessageLookupByLibrary.simpleMessage("Выберите свою атмосферу. Переключайтесь между светлыми и темными темами в соответствии с вашим настроением или окружением."),
     "introFifthScreenHeader" : MessageLookupByLibrary.simpleMessage("Светлый и темный режимы 🌓"),
-    "introFirstScreenBody" : MessageLookupByLibrary.simpleMessage("Ваше всеобъемлющее средство для расчета, отслеживания и организации вашей работы. Погрузитесь и узнайте, как вы можете повысить свою производительность!"),
+    "introFirstScreenBody" : MessageLookupByLibrary.simpleMessage("Ваш незаменимый спутник для отслеживания и расчета результатов работы. Забудьте о том, как утомительно считать заработок — экономьте время с PieceCa(lc)."),
     "introFirstScreenHeader" : MessageLookupByLibrary.simpleMessage("Добро пожаловать в PieceCa(lc) 📊"),
     "introFourthScreenBody" : MessageLookupByLibrary.simpleMessage("Пользовательский интерфейс, разработанный с учетом вас. Перемещайтесь с легкостью и делайте больше."),
     "introFourthScreenHeader" : MessageLookupByLibrary.simpleMessage("Интуитивный дизайн 🎨"),
@@ -117,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsBottomNavBarTitle" : MessageLookupByLibrary.simpleMessage("Настройки"),
     "settingsChangeTheme" : MessageLookupByLibrary.simpleMessage("Сменить тему"),
     "shareMonthData" : MessageLookupByLibrary.simpleMessage("Поделиться данными за месяц"),
+    "shareSubjectText" : m2,
     "somethingWentWrong" : MessageLookupByLibrary.simpleMessage("Что-то пошло не так. Пожалуйста, попробуйте еще раз."),
     "startTutorialAgain" : MessageLookupByLibrary.simpleMessage("Начать обучение заново"),
     "statsBottomNavBarTitle" : MessageLookupByLibrary.simpleMessage("Статистика"),

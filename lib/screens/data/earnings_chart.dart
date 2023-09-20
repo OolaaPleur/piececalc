@@ -50,7 +50,7 @@ class EarningsChart extends StatelessWidget {
             if (!aggregatedData.containsKey(day)) {
               aggregatedData[day] = [];
             }
-            aggregatedData[day]!.add(taskInfo);
+            aggregatedData[day]?.add(taskInfo);
           }
 
           aggregatedData = Map.fromEntries(

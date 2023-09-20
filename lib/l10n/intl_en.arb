@@ -58,7 +58,7 @@
   "noneCurrencyPicked": "None picked",
   "changeCurrency": "Change currency",
   "workDeleted": "Work deleted",
-  "workIsAlreadyUsedInTaskCantDelete": "Work is already used in task. Cant Delete",
+  "workIsAlreadyUsedInTaskCantDelete": "Work is already used in task. Can't Delete",
   "pleaseEnterAPrice": "Please enter a price",
   "save": "Save",
   "addWorksInSettings": "Add works in settings",
@@ -81,7 +81,7 @@
   "wouldYouLikeToDeleteThisTask": "Would you like to delete this task?",
   "workDeletion": "Work deletion",
   "wouldYouLikeToDeleteThisWork": "Would you like to delete this work?",
-  "emailToMe": "Email to me!",
+  "emailToMe": "Have questions? Email to me!",
   "invalidFormat": "Invalid Format",
   "error": "Error",
   "piececalc": "PieceCa(lc)",
@@ -97,7 +97,7 @@
   "done": "Done",
 
   "introFirstScreenHeader": "Welcome to PieceCa(lc) \uD83D\uDCCA",
-  "introFirstScreenBody": "Your comprehensive tool for calculating, tracking, and organizing your work. Dive in to discover how you can elevate your productivity!",
+  "introFirstScreenBody": "Your essential companion for tracking and calculating work outcomes. Say goodbye to the tedious task of calculating earnings — save time with PieceCa(lc).",
   "introSecondScreenHeader": "Instant Work Calculation \uD83D\uDCB9",
   "introSecondScreenBody": "Calculate the amount of work you've done with a tap and get a clear, organized overview instantly.",
   "introSecondAndHalfScreenHeader": "Monthly Organization \uD83D\uDCC5",
@@ -110,6 +110,7 @@
   "introFifthScreenBody": "Choose your vibe. Toggle between light and dark themes to match your mood or your surroundings.",
   "introSixthScreenHeader": "Ready to Begin? \uD83D\uDE80",
   "introSixthScreenBody": "Dive into PieceCa(lc) and start making your work calculation more organized and efficient today!",
+
 
   "startTutorialAgain": "Start tutorial again",
   "areYouSure": "Are you sure?",
@@ -131,5 +132,15 @@
   "auto": "Auto",
   "dark": "Dark",
   "chartGuideDaysOnTheXaxisMoneyEarnedOnThe": "🔍 Chart Guide: Days on the x-axis. Money earned on the y-axis.",
-  "totalEarned": "Total earned"
+  "totalEarned": "Total earned",
+
+  "shareSubjectText": "Here is my month tasks backup for {date} from PieceCalc.",
+  "@shareSubjectText": {
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "September 2023"
+      }
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../constants/constants.dart';
@@ -25,7 +26,7 @@ class TasksHelper {
     if (matchedWork.paymentType == PaymentType.piecewisePayment.toString().split('.').last) {
       amountFormatted = amount.replaceAll(',', '.');
     } else if (matchedWork.paymentType == PaymentType.hourlyPayment.toString().split('.').last) {
-      amountFormatted = time.format(context);
+      amountFormatted = formatTimeOfDay(time);
     } else {
       amountFormatted = amount;
     }
@@ -64,5 +65,13 @@ class TasksHelper {
       }
     }
     return oneOfTaskHasEmptyPickedWork;
+  }
+
+  /// Function, made to ensure same calculation even if device have am/pm
+  /// as localized time.
+  static String formatTimeOfDay(TimeOfDay time) {
+    final now = DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
+    return DateFormat.Hm().format(dt); // Uses 24-hour format without AM/PM
   }
 }

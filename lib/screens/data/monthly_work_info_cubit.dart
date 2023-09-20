@@ -39,9 +39,9 @@ class Initial extends MonthlyWorkInfoState {
 }
 
 /// Represents the state when the `MonthlyWorkInfo` data is being loaded.
-class Loading extends MonthlyWorkInfoState {
-  /// Constructor for [Loading].
-  Loading({required super.workData});
+class DataLoading extends MonthlyWorkInfoState {
+  /// Constructor for [DataLoading].
+  DataLoading({required super.workData});
 }
 
 /// Represents the state when the `MonthlyWorkInfo` data has been successfully loaded.
@@ -101,14 +101,14 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
 
   /// Asynchronously loads work data for a specific [month] and [year].
   ///
-  /// The method will first emit a [Loading] state to indicate the start of data retrieval.
+  /// The method will first emit a [DataLoading] state to indicate the start of data retrieval.
   /// Upon successful data fetching and processing, it emits a [DataLoaded] state containing
   /// a map of work summaries. If there's an error during this process, a [DataError] state is emitted.
   ///
   /// The work data is loaded based on entries from the 'done_works' and 'works' tables in the database.
   Future<void> loadData({required int month, required int year}) async {
     final log = Logger('MonthlyWorkInfoCubit_loadData');
-    //emit(Loading());
+    emit(DataLoading(workData: state.workData));
     final db = await DatabaseOperations.openAppDatabaseAndCreateTables('piececalc');
     try {
       // Fetch all rows from the 'done_works' table
@@ -197,6 +197,8 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
   Future<void> createBackup(
     Map<Work, WorkSummary> workData,
     List<CompositeTaskInfo> compositeTaskInfo,
+  {required String shareSubject,
+      required String shareText,}
   ) async {
     final doneWorksCSV = _generateCSV(workData, compositeTaskInfo);
 
@@ -207,8 +209,8 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
     await file.writeAsString(doneWorksCSV);
     await Share.shareFiles(
       [filePath],
-      subject: 'Backup of my data',
-      text: 'Here is my month tasks backup from PieceCalc.',
+      subject: shareSubject,
+      text: shareText,
     );
   }
 
@@ -227,27 +229,37 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
       if (composite.work.paymentType == PaymentType.piecewisePayment.toString().split('.').last) {
         dateToWorkToAmount.putIfAbsent(date, () => {})[workName] =
             (dateToWorkToAmount[date]?[workName] ?? 0) + double.parse(amount);
-      } else if (composite.work.paymentType ==
-          PaymentType.hourlyPayment.toString().split('.').last) {
-        final hourlyRate = composite.work.price;
-        final earnings = Helpers.calculateEarnings(amount, hourlyRate);
+      } else if (composite.work.paymentType == PaymentType.hourlyPayment.toString().split('.').last) {
+        // Convert the amount from "hh:mm" format to total minutes
+        final totalMinutes = Helpers.timeToMinutes(amount);
+
+        // Update the map with minutes (you can convert it back to "hh:mm" format when needed)
         dateToWorkToAmount.putIfAbsent(date, () => {})[workName] =
-            (dateToWorkToAmount[date]?[workName] ?? 0) + earnings;
+            (dateToWorkToAmount[date]?[workName] ?? 0) + totalMinutes;
       }
+
     }
 
     // Step 2: Get unique work names
     final workNames = workData.keys.map((work) => work.workName).toSet().toList();
 
-    // Step 3: Generate rows for each date
+// Step 3: Generate rows for each date
     final rows = <List<String>>[];
     dateToWorkToAmount.forEach((date, workToAmount) {
       final row = <String>[date];
       for (final workName in workNames) {
-        row.add(workToAmount[workName]?.toString() ?? '0');
+        final type = workData.keys.firstWhere((work) => work.workName == workName).paymentType;
+        if (type == PaymentType.hourlyPayment.toString().split('.').last) {
+          // Convert minutes back to "hh:mm" format for hourly payments
+          row.add(Helpers.minutesToTime(workToAmount[workName]?.toInt() ?? 0));
+        } else {
+          // For other types, use the double or int format
+          row.add(workToAmount[workName]?.toString() ?? '0');
+        }
       }
       rows.add(row);
     });
+
 
     // Sort rows by date
     rows.sort((a, b) => a[0].compareTo(b[0]));
@@ -264,20 +276,20 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
       totalSumRow.add(workData[work]!.combinedPrice.toString());
     }
 
-    // Step 6: Combine everything to generate the CSV
+// Step 6: Combine everything to generate the CSV
     final csv = StringBuffer()
 
-      // Header
+    // Header
       ..writeln(['Date', ...workNames].join(','));
 
-    // Rows
+// Rows
     for (final row in rows) {
       csv.writeln(row.join(','));
     }
 
-    // Total and Total Sum Rows
+// Total and Total Sum Rows
     csv
-      ..writeln(totalRow.join(','))
+      ..writeln(totalRow.join(','))  // Make sure to convert these rows' amounts to "hh:mm" format too if needed
       ..writeln(totalSumRow.join(','));
 
     return csv.toString();

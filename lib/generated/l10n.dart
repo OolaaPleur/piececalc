@@ -557,10 +557,10 @@ class S {
     );
   }
 
-  /// `Work is already used in task. Cant Delete`
+  /// `Work is already used in task. Can't Delete`
   String get workIsAlreadyUsedInTaskCantDelete {
     return Intl.message(
-      'Work is already used in task. Cant Delete',
+      'Work is already used in task. Can\'t Delete',
       name: 'workIsAlreadyUsedInTaskCantDelete',
       desc: '',
       args: [],
@@ -747,10 +747,10 @@ class S {
     );
   }
 
-  /// `Email to me!`
+  /// `Have questions? Email to me!`
   String get emailToMe {
     return Intl.message(
-      'Email to me!',
+      'Have questions? Email to me!',
       name: 'emailToMe',
       desc: '',
       args: [],
@@ -883,10 +883,10 @@ class S {
     );
   }
 
-  /// `Your comprehensive tool for calculating, tracking, and organizing your work. Dive in to discover how you can elevate your productivity!`
+  /// `Your essential companion for tracking and calculating work outcomes. Say goodbye to the tedious task of calculating earnings — save time with PieceCa(lc).`
   String get introFirstScreenBody {
     return Intl.message(
-      'Your comprehensive tool for calculating, tracking, and organizing your work. Dive in to discover how you can elevate your productivity!',
+      'Your essential companion for tracking and calculating work outcomes. Say goodbye to the tedious task of calculating earnings — save time with PieceCa(lc).',
       name: 'introFirstScreenBody',
       desc: '',
       args: [],
@@ -1210,6 +1210,16 @@ class S {
       name: 'totalEarned',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Here is my month tasks backup for {date} from PieceCalc.`
+  String shareSubjectText(Object date) {
+    return Intl.message(
+      'Here is my month tasks backup for $date from PieceCalc.',
+      name: 'shareSubjectText',
+      desc: '',
+      args: [date],
     );
   }
 }

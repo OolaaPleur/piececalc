@@ -120,21 +120,21 @@ class _AddWorkPageState extends State<AddWorkPage> {
                                 title: Text(context.l10n.pieceWork),
                                 value: PaymentType.piecewisePayment,
                                 groupValue: workType,
-                                onChanged: (value) {
+                                onChanged: widget.editedObject == null ? (PaymentType? value) {
                                   setState(() {
                                     workType = value!;
                                   });
-                                },
+                                } : null,
                               ),
                               RadioListTile(
                                 title: Text(context.l10n.hourWork),
                                 value: PaymentType.hourlyPayment,
                                 groupValue: workType,
-                                onChanged: (value) {
+                                onChanged: widget.editedObject == null ? (PaymentType? value) {
                                   setState(() {
                                     workType = value!;
                                   });
-                                },
+                                } : null,
                               ),
                             ],
                           ),

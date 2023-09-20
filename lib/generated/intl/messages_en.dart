@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m1(count) => "${Intl.plural(count, zero: '0 minutes', one: '1 minute', other: '${count} minutes')}";
 
+  static m2(date) => "Here is my month tasks backup for ${date} from PieceCalc.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "addDoneWork" : MessageLookupByLibrary.simpleMessage("Add done work"),
@@ -53,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "earned" : MessageLookupByLibrary.simpleMessage("Earned"),
     "editTask" : MessageLookupByLibrary.simpleMessage("Edit task"),
     "editWork" : MessageLookupByLibrary.simpleMessage("Edit work"),
-    "emailToMe" : MessageLookupByLibrary.simpleMessage("Email to me!"),
+    "emailToMe" : MessageLookupByLibrary.simpleMessage("Have questions? Email to me!"),
     "english" : MessageLookupByLibrary.simpleMessage("English"),
     "enterDate" : MessageLookupByLibrary.simpleMessage("Enter Date"),
     "error" : MessageLookupByLibrary.simpleMessage("Error"),
@@ -66,7 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hoursOnly" : m0,
     "introFifthScreenBody" : MessageLookupByLibrary.simpleMessage("Choose your vibe. Toggle between light and dark themes to match your mood or your surroundings."),
     "introFifthScreenHeader" : MessageLookupByLibrary.simpleMessage("Light & Dark Mode 🌓"),
-    "introFirstScreenBody" : MessageLookupByLibrary.simpleMessage("Your comprehensive tool for calculating, tracking, and organizing your work. Dive in to discover how you can elevate your productivity!"),
+    "introFirstScreenBody" : MessageLookupByLibrary.simpleMessage("Your essential companion for tracking and calculating work outcomes. Say goodbye to the tedious task of calculating earnings — save time with PieceCa(lc)."),
     "introFirstScreenHeader" : MessageLookupByLibrary.simpleMessage("Welcome to PieceCa(lc) 📊"),
     "introFourthScreenBody" : MessageLookupByLibrary.simpleMessage("A user-friendly interface designed with you in mind. Navigate with ease and get more done."),
     "introFourthScreenHeader" : MessageLookupByLibrary.simpleMessage("Intuitive Design 🎨"),
@@ -117,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsBottomNavBarTitle" : MessageLookupByLibrary.simpleMessage("Settings"),
     "settingsChangeTheme" : MessageLookupByLibrary.simpleMessage("Change Theme"),
     "shareMonthData" : MessageLookupByLibrary.simpleMessage("Share month data"),
+    "shareSubjectText" : m2,
     "somethingWentWrong" : MessageLookupByLibrary.simpleMessage("Something went wrong. PLease try again."),
     "startTutorialAgain" : MessageLookupByLibrary.simpleMessage("Start tutorial again"),
     "statsBottomNavBarTitle" : MessageLookupByLibrary.simpleMessage("Stats"),
@@ -134,7 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "workAmount" : MessageLookupByLibrary.simpleMessage("Work amount"),
     "workDeleted" : MessageLookupByLibrary.simpleMessage("Work deleted"),
     "workDeletion" : MessageLookupByLibrary.simpleMessage("Work deletion"),
-    "workIsAlreadyUsedInTaskCantDelete" : MessageLookupByLibrary.simpleMessage("Work is already used in task. Cant Delete"),
+    "workIsAlreadyUsedInTaskCantDelete" : MessageLookupByLibrary.simpleMessage("Work is already used in task. Can\'t Delete"),
     "workName" : MessageLookupByLibrary.simpleMessage("Work name"),
     "worksHasntBeenArchivedYetToArchiveWorkTapThreedot" : MessageLookupByLibrary.simpleMessage("Works hasn\'t been archived yet. To archive work - tap three-dot menu on work list tile and tap \'Archive\'"),
     "wouldYouLikeToDeleteThisTask" : MessageLookupByLibrary.simpleMessage("Would you like to delete this task?"),

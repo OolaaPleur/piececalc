@@ -74,7 +74,7 @@
   "wouldYouLikeToDeleteThisTask": "Kas soovite selle ülesande kustutada?",
   "workDeletion": "Töö kustutamine",
   "wouldYouLikeToDeleteThisWork": "Kas soovite selle töö kustutada?",
-  "emailToMe": "Saada mulle e-kiri!",
+  "emailToMe": "Küsimused? Kirjuta mulle e-posti teel!",
   "invalidFormat": "Vigane formaat",
 
   "error": "Viga",
@@ -91,7 +91,7 @@
   "done": "Valmis",
 
   "introFirstScreenHeader": "Tere tulemast PieceCa(lc)'i \uD83D\uDCCA",
-  "introFirstScreenBody": "Sinu põhjalik vahend arvutamiseks, jälgimiseks ja töö korraldamiseks. Sukeldu ja avasta, kuidas saad oma tootlikkust tõsta!",
+  "introFirstScreenBody": "Teie hädavajalik kaaslane töö tulemuste jälgimiseks ja arvutamiseks. Unustage tüütu teenitud raha arvutamine — säästke aega PieceCa(lc)-ga.",
   "introSecondScreenHeader": "Kohene töö arvutamine \uD83D\uDCB9",
   "introSecondScreenBody": "Arvuta tehtud töö maht ühe klõpsuga ja saa kohe selge, organiseeritud ülevaade.",
   "introSecondAndHalfScreenHeader": "Kuuline korraldus \uD83D\uDCC5",
@@ -125,5 +125,15 @@
   "auto": "Automaatne",
   "dark": "Tume",
   "chartGuideDaysOnTheXaxisMoneyEarnedOnThe": "🔍 Graafiku juhend: päevad x-teljel. Teenitud raha y-teljel.",
-  "totalEarned": "Kokku teenitud"
+  "totalEarned": "Kokku teenitud",
+
+  "shareSubjectText": "Siin on minu kuu ülesannete varukoopia {date} PieceCalc'ist.",
+  "@shareSubjectText": {
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "September 2023"
+      }
+    }
+  }
 }

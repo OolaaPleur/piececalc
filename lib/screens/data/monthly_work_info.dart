@@ -78,7 +78,7 @@ class _MonthlyWorkInfoState extends State<MonthlyWorkInfo> {
         Expanded(
           child: BlocBuilder<MonthlyWorkInfoCubit, MonthlyWorkInfoState>(
             builder: (context, monthlyWorkInfoState) {
-              if (monthlyWorkInfoState is Loading) {
+              if (monthlyWorkInfoState is DataLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (monthlyWorkInfoState is DataLoaded) {
                 if (monthlyWorkInfoState.workData.isEmpty) {

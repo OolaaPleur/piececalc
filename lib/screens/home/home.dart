@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
 import 'package:piececalc/screens/settings/settings.dart';
+import '../../constants/constants.dart';
 import '../../utils/navigation.dart';
 import '../../widgets/snackbar.dart';
 import '../data/monthly_work_info.dart';
@@ -53,7 +54,8 @@ class _HomeState extends State<Home> {
       listener: (context, state) {
         if (state is WorkDeleted) {
           ScaffoldMessenger.of(context).showSnackBar(
-              AppSnackBar(context, message: context.l10n.workDeleted).showSnackBar(),);
+            AppSnackBar(context, message: context.l10n.workDeleted).showSnackBar(),
+          );
         }
         if (state is WorkCantBeDeleted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -62,106 +64,110 @@ class _HomeState extends State<Home> {
           );
         }
       },
-  child: Scaffold(
-      appBar: AppBar(
-        title: Text(
-          context.l10n.piececalc,
-          style: Theme.of(context).textTheme.headlineMedium,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            context.l10n.piececalc,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.shifting,
+          selectedFontSize: Theme.of(context).textTheme.titleLarge!.fontSize ?? 20,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.person),
+              label: context.l10n.statsBottomNavBarTitle,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.list),
+              label: context.l10n.homeBottomNavBarTitle,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.settings),
+              label: context.l10n.settingsBottomNavBarTitle,
+            ),
+          ],
+          currentIndex: _activePage,
+          //New
+          onTap: (index) {
+            final curve = (index - _activePage).abs() == 1 ? Curves.easeInOut : Curves.linear;
+            _pageViewController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 300),
+              curve: curve,
+            );
+          },
+        ),
+        body: PageView(
+          controller: _pageViewController,
+          children: _pages,
+          onPageChanged: (index) {
+            setState(() {
+              _activePage = index;
+            });
+          },
+        ),
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            if (_activePage == 1)
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state is WorkDoneLengthEqualsZero) {
+                    return Tooltip(
+                      showDuration: const Duration(seconds: 2),
+                      triggerMode: TooltipTriggerMode.tap,
+                      message: context.l10n.addWorksInSettings,
+                      child: const FloatingActionButton(
+                        backgroundColor: Colors.grey,
+                        onPressed: null,
+                        child: Icon(Icons.add),
+                      ),
+                    );
+                  }
+                  if (state is WorkDoneLengthMoreThanZero) {
+                    return FloatingActionButton(
+                      tooltip: context.l10n.tapToAddTask,
+                      onPressed: () {
+                        Navigation.navigateToTaskEditor(context);
+                      },
+                      child: const Icon(Icons.add),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              )
+            else if (_activePage == 0)
+              BlocBuilder<MonthlyWorkInfoCubit, MonthlyWorkInfoState>(
+                builder: (context, monthlyWorkInfoState) {
+                  if (monthlyWorkInfoState is DataLoaded) {
+                    return FloatingActionButton(
+                      tooltip: context.l10n.shareMonthData,
+                      onPressed: monthlyWorkInfoState.workData.isEmpty
+                          ? null
+                          : () {
+                              context.read<MonthlyWorkInfoCubit>().createBackup(
+                                    monthlyWorkInfoState.workData,
+                                    monthlyWorkInfoState.compositeTaskInfo,
+                                    shareSubject: 'Backup of my data',
+                                    shareText: context.l10n.shareSubjectText(
+                                      '${monthToLocalKey[Month.values[monthlyWorkInfoState.month - 1]]!(context.l10n, 0)} ${monthlyWorkInfoState.year}',
+                                    ),
+                                  );
+                            },
+                      backgroundColor: monthlyWorkInfoState.workData.isEmpty ? Colors.grey : null,
+                      child: const Icon(Icons.share),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+          ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        selectedFontSize: Theme.of(context).textTheme.titleLarge!.fontSize ?? 20,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.person),
-            label: context.l10n.statsBottomNavBarTitle,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.list),
-            label: context.l10n.homeBottomNavBarTitle,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.settings),
-            label: context.l10n.settingsBottomNavBarTitle,
-          ),
-        ],
-        currentIndex: _activePage,
-        //New
-        onTap: (index) {
-          Curve curve = (index - _activePage).abs() == 1 ? Curves.easeInOut : Curves.linear;
-          _pageViewController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: curve,
-          );
-        },
-      ),
-      body: PageView(
-        controller: _pageViewController,
-        children: _pages,
-        onPageChanged: (index) {
-          setState(() {
-            _activePage = index;
-          });
-        },
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          if (_activePage == 1)
-            BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                if (state is WorkDoneLengthEqualsZero) {
-                  return Tooltip(
-                    showDuration: const Duration(seconds: 2),
-                    triggerMode: TooltipTriggerMode.tap,
-                    message: context.l10n.addWorksInSettings,
-                    child: const FloatingActionButton(
-                      backgroundColor: Colors.grey,
-                      onPressed: null,
-                      child: Icon(Icons.add),
-                    ),
-                  );
-                }
-                if (state is WorkDoneLengthMoreThanZero) {
-                  return FloatingActionButton(
-                    tooltip: context.l10n.tapToAddTask,
-                    onPressed: () {
-                      Navigation.navigateToTaskEditor(context);
-                    },
-                    child: const Icon(Icons.add),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-            )
-          else if (_activePage == 0)
-            BlocBuilder<MonthlyWorkInfoCubit, MonthlyWorkInfoState>(
-              builder: (context, monthlyWorkInfoState) {
-                if (monthlyWorkInfoState is DataLoaded) {
-                  return FloatingActionButton(
-                    tooltip: context.l10n.shareMonthData,
-                    onPressed: monthlyWorkInfoState.workData.isEmpty
-                        ? null
-                        : () {
-                            context.read<MonthlyWorkInfoCubit>().createBackup(
-                                  monthlyWorkInfoState.workData,
-                                  monthlyWorkInfoState.compositeTaskInfo,
-                                );
-                          },
-                    backgroundColor: monthlyWorkInfoState.workData.isEmpty ? Colors.grey : null,
-                    child: const Icon(Icons.share),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-            ),
-        ],
-      ),
-    ),
-);
+    );
   }
 }
