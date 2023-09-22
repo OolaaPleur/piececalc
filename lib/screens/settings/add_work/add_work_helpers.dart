@@ -30,14 +30,16 @@ class AddWorkHelpers {
   }) {
     final priceWithDot = priceController.text.trim().replaceAll(',', '.');
     final uniqueKey = const Uuid().v1();
-    return {
+    var map = {
       'id': editedObject != null ? editedObject.id : uniqueKey,
       'workName': workName,
       'workType': workType == PaymentType.piecewisePayment ? 'piecewisePayment' : 'hourlyPayment',
       'price': priceWithDot,
       'workColor': workColor.value.toString(),
-      'isArchived': editedObject == null ? 0 : editedObject.isArchived
-    ,};
+      'isArchived': editedObject == null ? 0 : (editedObject.isArchived ? 1 : 0)
+      ,};
+    print(map);
+    return map;
   }
   /// Function, shows alert dialog when tried to delete work.
   void showAlertDialog(BuildContext context, Work work) {
