@@ -43,7 +43,9 @@ $ flutter run --flavor development --target lib/main_development.dart
 $ flutter run --flavor production --target lib/main_production.dart
 ```
 
-Or you can just grab last version from [releases](https://github.com/OolaaPleur/piececalc/releases).
+Also you can just grab last version from [releases](https://github.com/OolaaPleur/piececalc/releases).
+
+Or explore a demo version of the app for testing purposes, simply click [here](https://oolaapleur.github.io/piececalc/).
 
 _\*PieceCa(lc) works only on Android._
 
