@@ -1,4 +1,4 @@
-import '../l10n/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Work types by type of payment.
 enum PaymentType {

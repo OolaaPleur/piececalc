@@ -19,16 +19,16 @@ class ShowTutorialAgain extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text(AppLocalizations.of(context)!.areYouSure),
+                title: Text(context.l10n.areYouSure),
                 actions: [
                   TextButton(
-                    child: Text(AppLocalizations.of(context)!.no),
+                    child: Text(context.l10n.no),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                   ),
                   TextButton(
-                    child: Text(AppLocalizations.of(context)!.yes),
+                    child: Text(context.l10n.yes),
                     onPressed: () {
                       GetIt.I<SettingsRepository>().setBoolValue('first_load', value: false);
                       Navigator.of(context).pushAndRemoveUntil(

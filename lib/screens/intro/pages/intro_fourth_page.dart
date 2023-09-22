@@ -52,7 +52,7 @@ PageViewModel introFourthPage(BuildContext context) {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            AppLocalizations.of(context)!.introThirdScreenBody,
+            context.l10n.introThirdScreenBody,
             textScaleFactor: introBodyTextScale,
             textAlign: TextAlign.center,
           ),

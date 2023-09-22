@@ -1,13 +1,16 @@
 // ignore_for_file: avoid_dynamic_calls
-
+import 'dart:convert';
+import 'dart:html' as html;
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:cross_file/cross_file.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:piececalc/constants/constants.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../data/datasources/work_data_source.dart';
 import '../../data/models/completed_task.dart';
@@ -201,17 +204,26 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
       required String shareText,}
   ) async {
     final doneWorksCSV = _generateCSV(workData, compositeTaskInfo);
+    if (!kIsWeb) {
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/monthBackup.csv';
 
-    final directory = await getApplicationDocumentsDirectory();
-    final filePath = '${directory.path}/monthBackup.csv';
-
-    final file = File(filePath);
-    await file.writeAsString(doneWorksCSV);
-    await Share.shareFiles(
-      [filePath],
-      subject: shareSubject,
-      text: shareText,
-    );
+      final file = File(filePath);
+      await file.writeAsString(doneWorksCSV);
+      await Share.shareXFiles(
+        [XFile(filePath)],
+        subject: shareSubject,
+        text: shareText,
+      );
+    } else {
+      final String csvContent = '$doneWorksCSV';
+      final blob = html.Blob([Uint8List.fromList(utf8.encode(csvContent))], 'text/csv');
+      final url = html.Url.createObjectUrlFromBlob(blob);
+      final anchor = html.AnchorElement(href: url)
+        ..setAttribute("download", "monthBackup.csv")
+        ..click();
+      html.Url.revokeObjectUrl(url);
+    }
   }
 
   String _generateCSV(

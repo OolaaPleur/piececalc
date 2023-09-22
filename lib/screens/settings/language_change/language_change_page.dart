@@ -32,7 +32,7 @@ class LanguageChangePage extends StatelessWidget {
                   style: TextStyle(fontSize: Theme.of(context).textTheme.titleLarge!.fontSize),
                 ),
                 title: Text(
-                  languageToLocalKey[language]!(AppLocalizations.of(context)!),
+                  languageToLocalKey[language]!(context.l10n),
                   style: TextStyle(fontSize: Theme.of(context).textTheme.labelSmall!.fontSize),
                 ),
                 onTap: () {

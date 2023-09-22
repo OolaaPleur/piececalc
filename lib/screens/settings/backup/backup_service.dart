@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:html' as html;
 
+import 'package:cross_file/cross_file.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../utils/database/database_operations.dart';
 
@@ -19,7 +23,7 @@ class BackupService {
     if (dataList.isEmpty) return '';
     // Rows
     final buffer = StringBuffer()
-    // Headers
+      // Headers
       ..write('${dataList[0].keys.join(',')}\n');
     for (final data in dataList) {
       buffer.write('${data.values.join(',')}\n');
@@ -40,12 +44,21 @@ class BackupService {
 
     final worksCSV = convertToCSV(worksList);
     final doneWorksCSV = convertToCSV(doneWorksList);
-
-    final directory = await getApplicationDocumentsDirectory();
-    final filePath = '${directory.path}/piececalc.csv';
-
-    final file = File(filePath);
-    await file.writeAsString('$worksCSV\n\n$doneWorksCSV');
-    await Share.shareFiles([filePath], subject: subject, text: text);
+    if (!kIsWeb) {
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/piececalc.csv';
+      final file = File(filePath);
+      await file.writeAsString('$worksCSV\n\n$doneWorksCSV');
+      await Share.shareXFiles([XFile(filePath)], subject: subject, text: text);
+    }
+    if (kIsWeb) {
+      final String csvContent = '$worksCSV\n\n$doneWorksCSV';
+      final blob = html.Blob([Uint8List.fromList(utf8.encode(csvContent))], 'text/csv');
+      final url = html.Url.createObjectUrlFromBlob(blob);
+      final anchor = html.AnchorElement(href: url)
+        ..setAttribute("download", "piececalc.csv")
+        ..click();
+      html.Url.revokeObjectUrl(url);
+    }
   }
 }
