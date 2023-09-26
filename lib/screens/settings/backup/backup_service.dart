@@ -1,12 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:html' as html;
-
-import 'package:cross_file/cross_file.dart';
 import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 
+import '../../../utils/backup/backup_mobile.dart';
+import '../../../utils/backup/backup_web.dart';
 import '../../../utils/database/database_operations.dart';
 
 /// A service class responsible for backup-related operations.
@@ -45,20 +40,20 @@ class BackupService {
     final worksCSV = convertToCSV(worksList);
     final doneWorksCSV = convertToCSV(doneWorksList);
     if (!kIsWeb) {
-      final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/piececalc.csv';
-      final file = File(filePath);
-      await file.writeAsString('$worksCSV\n\n$doneWorksCSV');
-      await Share.shareXFiles([XFile(filePath)], subject: subject, text: text);
+      await createAndShareBackupMobile(
+          worksCSV: worksCSV,
+          doneWorksCSV: doneWorksCSV,
+          subject: subject,
+          text: text,
+          fileName: 'piececalc',);
     }
     if (kIsWeb) {
-      final String csvContent = '$worksCSV\n\n$doneWorksCSV';
-      final blob = html.Blob([Uint8List.fromList(utf8.encode(csvContent))], 'text/csv');
-      final url = html.Url.createObjectUrlFromBlob(blob);
-      final anchor = html.AnchorElement(href: url)
-        ..setAttribute("download", "piececalc.csv")
-        ..click();
-      html.Url.revokeObjectUrl(url);
+      await createAndShareBackupWeb(
+          worksCSV: worksCSV,
+          doneWorksCSV: doneWorksCSV,
+          subject: subject,
+          text: text,
+          fileName: 'piececalc',);
     }
   }
 }

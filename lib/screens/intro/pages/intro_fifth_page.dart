@@ -29,6 +29,7 @@ PageViewModel introFifthPage(BuildContext context) {
         ClipOval(
           child: Image.asset(
             'assets/intro/intro_theme_change.png',
+            semanticLabel: 'Vibrant and colorful image with abstract lines and in circle at center of image is phone',
             scale: 6,
           ),
         ),

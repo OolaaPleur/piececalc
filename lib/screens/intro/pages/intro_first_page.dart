@@ -28,6 +28,7 @@ PageViewModel introFirstPage (BuildContext context) {
         ClipOval(
           child: Image.asset(
             'assets/launcher_icon.png',
+            semanticLabel: 'Launcher icon, todo list with big tick symbol',
             scale: 6,
           ),
         ),

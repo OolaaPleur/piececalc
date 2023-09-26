@@ -27,6 +27,7 @@ PageViewModel introSixthPage(BuildContext context) {
         ClipOval(
           child: Image.asset(
             'assets/intro/intro_fifth_page.png',
+            semanticLabel: 'Medieval lantern with fire inside',
             scale: 6,
           ),
         ),

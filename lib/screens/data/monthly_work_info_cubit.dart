@@ -1,16 +1,10 @@
 // ignore_for_file: avoid_dynamic_calls
-import 'dart:convert';
-import 'dart:html' as html;
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:cross_file/cross_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:piececalc/constants/constants.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../data/datasources/work_data_source.dart';
 import '../../data/models/completed_task.dart';
@@ -18,6 +12,8 @@ import '../../data/models/composite_task_info.dart';
 import '../../data/models/work.dart';
 import '../../data/models/work_summary.dart';
 import '../../data/repositories/work_repository.dart';
+import '../../utils/backup/backup_mobile.dart';
+import '../../utils/backup/backup_web.dart';
 import '../../utils/database/database_operations.dart';
 import '../../utils/helpers.dart';
 
@@ -204,25 +200,10 @@ class MonthlyWorkInfoCubit extends Cubit<MonthlyWorkInfoState> {
       required String shareText,}
   ) async {
     final doneWorksCSV = _generateCSV(workData, compositeTaskInfo);
-    if (!kIsWeb) {
-      final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/monthBackup.csv';
-
-      final file = File(filePath);
-      await file.writeAsString(doneWorksCSV);
-      await Share.shareXFiles(
-        [XFile(filePath)],
-        subject: shareSubject,
-        text: shareText,
-      );
+    if (kIsWeb) {
+      await createAndShareBackupWeb(worksCSV: '', doneWorksCSV: doneWorksCSV, subject: shareSubject, text: shareText, fileName: 'monthBackup');
     } else {
-      final String csvContent = '$doneWorksCSV';
-      final blob = html.Blob([Uint8List.fromList(utf8.encode(csvContent))], 'text/csv');
-      final url = html.Url.createObjectUrlFromBlob(blob);
-      final anchor = html.AnchorElement(href: url)
-        ..setAttribute("download", "monthBackup.csv")
-        ..click();
-      html.Url.revokeObjectUrl(url);
+      await createAndShareBackupMobile(worksCSV: '', doneWorksCSV: doneWorksCSV, subject: shareSubject, text: shareText, fileName: 'monthBackup');
     }
   }
 

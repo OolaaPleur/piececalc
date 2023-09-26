@@ -12,20 +12,24 @@ class ArchiveImageAndText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: CircleAvatar(
-            radius: 100,
-            child: ClipOval(child: Image.asset('assets/empty_archive.png')),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: CircleAvatar(
+              radius: 100,
+              child: ClipOval(child: Image.asset('assets/empty_archive.png', semanticLabel: 'Locked safe box.')),
+            ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 10, right: 20, left: 20),
-          child: Text(
-            context.l10n.worksHasntBeenArchivedYetToArchiveWorkTapThreedot,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 10, right: 20, left: 20),
+            child: Text(
+              context.l10n.worksHasntBeenArchivedYetToArchiveWorkTapThreedot,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+              ),
             ),
           ),
         ),

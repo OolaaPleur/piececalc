@@ -11,7 +11,6 @@ class AppInfoText extends StatelessWidget {
   /// Gets app name and app version.
   Future<String> appInfo() async {
     final packageInfo = await PackageInfo.fromPlatform();
-
     final appName = packageInfo.appName;
     final version = packageInfo.version;
     return '$appName : $version';

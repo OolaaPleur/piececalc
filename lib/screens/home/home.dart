@@ -42,6 +42,13 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+    precacheImage(Image.asset('assets/chart.png').image, context);
+    precacheImage(Image.asset('assets/empty_archive.png').image, context);
+    super.didChangeDependencies();
+  }
+
   static final List<Widget> _pages = <Widget>[
     const MonthlyWorkInfo(),
     const Tasks(),

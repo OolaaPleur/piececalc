@@ -39,7 +39,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
           : PaymentType.hourlyPayment;
       workType = widget.editedObject == null ? PaymentType.piecewisePayment : edWorkType;
       workNameController.text = widget.editedObject!.workName;
-      priceController.text = widget.editedObject!.price.toString();
+      priceController.text = widget.editedObject!.price % 1 == 0 ? widget.editedObject!.price.toInt().toString() : widget.editedObject!.price.toString();
       dialogPickerColor = widget.editedObject!.workColor;
     }
     super.initState();

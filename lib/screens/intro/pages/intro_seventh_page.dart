@@ -27,6 +27,7 @@ PageViewModel introSeventhPage(BuildContext context) {
         ClipOval(
           child: Image.asset(
             'assets/intro/intro_seventh_page.png',
+            semanticLabel: 'Space rocket and calculator at bottom of the rocket',
             scale: 6,
           ),
         ),
@@ -51,7 +52,7 @@ PageViewModel introSeventhPage(BuildContext context) {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            AppLocalizations.of(context)!.introSecondScreenBody,
+            AppLocalizations.of(context)!.introSixthScreenBody,
             textScaleFactor: introBodyTextScale,
             textAlign: TextAlign.center,
           ),

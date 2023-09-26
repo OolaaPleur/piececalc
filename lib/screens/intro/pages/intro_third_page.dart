@@ -27,6 +27,7 @@ PageViewModel introThirdPage(BuildContext context) {
         ClipOval(
           child: Image.asset(
             'assets/intro/intro_third_page.png',
+            semanticLabel: 'Calendar with big magnifying glass',
             scale: 6,
           ),
         ),

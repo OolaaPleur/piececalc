@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 /// Class, where happens all database-related operations.
 class DatabaseOperations {
@@ -20,8 +19,6 @@ class DatabaseOperations {
   /// Open database by [databaseName] and create required tables if not exist.
   static Future<Database> openAppDatabaseAndCreateTables(String databaseName) async {
     final db = await DatabaseOperations.openAppDatabase('piececalc');
-    var sqliteVersion = (await db.rawQuery('select sqlite_version()')).first.values.first;
-    print(sqliteVersion); // should print 3.39.3
     await DatabaseOperations.createTable(db, 'works', '''
     id TEXT PRIMARY KEY, workName TEXT, workType TEXT, price TEXT, orderIndex INTEGER, workColor TEXT, isArchived INTEGER''');
     await DatabaseOperations.createTable(db, 'done_works', '''

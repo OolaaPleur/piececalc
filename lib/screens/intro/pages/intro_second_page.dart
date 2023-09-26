@@ -29,6 +29,7 @@ PageViewModel introSecondPage (BuildContext context) {
         ClipOval(
           child: Image.asset(
             'assets/intro/intro_second_screen.png',
+            semanticLabel: 'Calculator with big button (yellow background and lightning in it as icon)',
             scale: 6,
           ),
         ),

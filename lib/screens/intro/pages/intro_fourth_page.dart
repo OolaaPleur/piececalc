@@ -28,6 +28,7 @@ PageViewModel introFourthPage(BuildContext context) {
         ClipOval(
           child: Image.asset(
             'assets/intro/intro_fourth_page.png',
+            semanticLabel: 'Cloud on back and red shield on front',
             scale: 6,
           ),
         ),

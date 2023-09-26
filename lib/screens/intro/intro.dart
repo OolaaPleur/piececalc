@@ -32,15 +32,18 @@ class Intro extends StatelessWidget {
     );
     return Scaffold(
       body: IntroductionScreen(
+        nextSemantic: 'Next',
+        backSemantic: 'Back',
+        doneSemantic: 'Done',
         scrollPhysics: const ClampingScrollPhysics(),
         next: Icon(
           Icons.navigate_next,
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
+          color: Theme.of(context).colorScheme.onPrimaryContainer, semanticLabel: 'Next',
         ),
         showBackButton: true,
         back: Icon(
           Icons.navigate_before,
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
+          color: Theme.of(context).colorScheme.onPrimaryContainer, semanticLabel: 'Back',
         ),
         onDone: () async {
           final navigator = Navigator.of(context);

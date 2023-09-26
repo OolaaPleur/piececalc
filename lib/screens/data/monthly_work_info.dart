@@ -87,7 +87,7 @@ class _MonthlyWorkInfoState extends State<MonthlyWorkInfo> {
                     children: [
                       CircleAvatar(
                         radius: 100,
-                        child: ClipOval(child: Image.asset('assets/chart.png')),
+                        child: ClipOval(child: Image.asset('assets/chart.png', semanticLabel: 'Chart line goes up.')),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: appInfoPadding),
