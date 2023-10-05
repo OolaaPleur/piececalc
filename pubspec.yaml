@@ -1,5 +1,5 @@
 name: piececalc
-version: 1.0.0+2
+version: 1.0.0+7
 publish_to: none
 description: Piecework calculator
 environment: 
@@ -9,6 +9,7 @@ dependencies:
   cross_file: ^0.3.3+5
   currency_picker: ^2.0.16
   equatable: ^2.0.5
+  file_picker: ^5.5.0
   firebase_core: ^2.15.1
   firebase_core_web: ^2.8.0
   firebase_crashlytics: ^3.3.5
@@ -51,6 +52,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/launcher_icon.png
+    - assets/web_icon/launcher_icon.png
     - assets/chart.png
     - assets/intro/intro_second_screen.png
     - assets/intro/intro_third_page.png

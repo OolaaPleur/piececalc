@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:piececalc/screens/settings/backup/bloc/file_picking_bloc.dart';
 
 import '../data/repositories/settings_repository.dart';
 import '../screens/data/monthly_work_info_cubit.dart';
@@ -59,6 +60,9 @@ class _AppState extends State<App> {
             create: (_) => CurrencyPickerCubit()..loadCurrency(),
           ),
           BlocProvider(
+            create: (context) => FilePickingBloc(),
+          ),
+          BlocProvider(
             create: (_) =>
                 MonthlyWorkInfoCubit()..loadData(month: currentDate.month, year: currentDate.year),
           ),
@@ -78,6 +82,17 @@ class _AppState extends State<App> {
                 }
               },
             ),
+            BlocListener<FilePickingBloc, FilePickingState>(
+              listener: (context, state) {
+                if (state.status == FilePickingStatus.dataUploaded) {
+                  context.read<TaskEditorBloc>().add(LoadWorkEvent());
+                  context.read<TasksCubit>().loadData();
+                  context
+                      .read<MonthlyWorkInfoCubit>()
+                      .loadData(month: currentDate.month, year: currentDate.year);
+                }
+              },
+            ),
             BlocListener<TasksCubit, TasksState>(
               listener: (context, state) {
                 if (state is TaskDeleted) {
@@ -92,7 +107,6 @@ class _AppState extends State<App> {
                 if (state is WorkSaved) {
                   context.read<TaskEditorBloc>().add(LoadWorkEvent());
                   context.read<TasksCubit>().loadData();
-
                   context
                       .read<MonthlyWorkInfoCubit>()
                       .loadData(month: currentDate.month, year: currentDate.year);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:piececalc/l10n/l10n.dart';
 
-import 'backup_service.dart';
+import 'backup_task_picker.dart';
 
 /// A [StatelessWidget] that provides a UI for creating and sharing backups.
 ///
@@ -12,17 +12,20 @@ class Backup extends StatelessWidget {
   ///
   /// The [Key] argument is optional and can be used to differentiate
   /// between multiple [Backup] widgets in the widget tree.
-  Backup({super.key});
-
-  final BackupService _backupService = BackupService();
+  const Backup({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        onTap: () async {
-          await _backupService.createBackupAndShare(
-              subject: context.l10n.backupOfMyData, text: context.l10n.hereIsMyBackupFromPiececalc,);
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => const BackupTaskPicker(),
+            ),
+          );
+
         },
         title: Text(context.l10n.backup),
         leading: const Icon(Icons.storage),

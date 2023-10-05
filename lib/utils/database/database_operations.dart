@@ -37,7 +37,11 @@ class DatabaseOperations {
     final log = Logger('insertDataBatch');
     var batch = database.batch();
     for (var i = 0; i < dataList.length; i++) {
-      batch.insert(tableName, dataList[i]);
+      batch.insert(
+        tableName,
+        dataList[i],
+        conflictAlgorithm: ConflictAlgorithm.replace, // Add this line
+      );
 
       if (i % 25000 == 0) {
         await batch.commit(noResult: true);

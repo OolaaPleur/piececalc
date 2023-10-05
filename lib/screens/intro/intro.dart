@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,9 +20,29 @@ import 'pages/intro_second_page.dart';
 import 'pages/intro_seventh_page.dart';
 
 /// Class, defines introduction screen for user, who use app for the first time.
-class Intro extends StatelessWidget {
+class Intro extends StatefulWidget {
   /// Constructor for [Intro].
   const Intro({super.key});
+
+  @override
+  State<Intro> createState() => _IntroState();
+}
+
+class _IntroState extends State<Intro> {
+
+  @override
+  void didChangeDependencies() {
+    if (kIsWeb) {
+      precacheImage(Image.asset('assets/launcher_icon.png').image, context);
+      precacheImage(Image.asset('assets/intro/intro_second_screen.png').image, context);
+      precacheImage(Image.asset('assets/intro/intro_third_page.png').image, context);
+      precacheImage(Image.asset('assets/intro/intro_fourth_page.png').image, context);
+      precacheImage(Image.asset('assets/intro/intro_fifth_page.png').image, context);
+      precacheImage(Image.asset('assets/intro/intro_theme_change.png').image, context);
+      precacheImage(Image.asset('assets/intro/intro_seventh_page.png').image, context);
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

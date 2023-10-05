@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piececalc/l10n/l10n.dart';
+import 'package:piececalc/screens/settings/backup/bloc/file_picking_bloc.dart';
 import 'package:piececalc/screens/settings/settings.dart';
 import '../../constants/constants.dart';
 import '../../utils/navigation.dart';
@@ -57,20 +58,43 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AddWorkCubit, AddWorkState>(
-      listener: (context, state) {
-        if (state is WorkDeleted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            AppSnackBar(context, message: context.l10n.workDeleted).showSnackBar(),
-          );
-        }
-        if (state is WorkCantBeDeleted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            AppSnackBar(context, message: context.l10n.workIsAlreadyUsedInTaskCantDelete)
-                .showSnackBar(),
-          );
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AddWorkCubit, AddWorkState>(
+          listener: (context, state) {
+            if (state is WorkDeleted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(context, message: context.l10n.workDeleted).showSnackBar(),
+              );
+            }
+            if (state is WorkCantBeDeleted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(context, message: context.l10n.workIsAlreadyUsedInTaskCantDelete)
+                    .showSnackBar(),
+              );
+            }
+          },
+        ),
+        BlocListener<FilePickingBloc, FilePickingState>(
+          listener: (context, state) {
+            if (state.status == FilePickingStatus.pickedOther) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(context, message: context.l10n.fileIsNotCorrect).showSnackBar(),
+              );
+            }
+            if (state.status == FilePickingStatus.dataUploaded) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(context, message: context.l10n.dataSuccessfullyUploadedToApp).showSnackBar(),
+              );
+            }
+            if (state.status == FilePickingStatus.fileIsNotBackup) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(context, message: context.l10n.fileIsDamaged).showSnackBar(),
+              );
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: Text(

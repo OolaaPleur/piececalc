@@ -1222,6 +1222,56 @@ class S {
       args: [date],
     );
   }
+
+  /// `File is not correct.`
+  String get fileIsNotCorrect {
+    return Intl.message(
+      'File is not correct.',
+      name: 'fileIsNotCorrect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data successfully uploaded to app.`
+  String get dataSuccessfullyUploadedToApp {
+    return Intl.message(
+      'Data successfully uploaded to app.',
+      name: 'dataSuccessfullyUploadedToApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File is damaged.`
+  String get fileIsDamaged {
+    return Intl.message(
+      'File is damaged.',
+      name: 'fileIsDamaged',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Export Backup to File`
+  String get exportBackupToFile {
+    return Intl.message(
+      'Export Backup to File',
+      name: 'exportBackupToFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import Backup from File`
+  String get importBackupFromFile {
+    return Intl.message(
+      'Import Backup from File',
+      name: 'importBackupFromFile',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

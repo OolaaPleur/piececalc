@@ -135,5 +135,10 @@
         "example": "September 2023"
       }
     }
-  }
+  },
+  "fileIsNotCorrect": "Файл не корректен.",
+  "dataSuccessfullyUploadedToApp": "Данные успешно загружены в приложение.",
+  "fileIsDamaged": "Файл поврежден.",
+  "exportBackupToFile": "Экспортировать резервную копию в файл",
+  "importBackupFromFile": "Импортировать резервную копию из файла"
 }

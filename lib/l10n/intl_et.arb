@@ -135,5 +135,10 @@
         "example": "September 2023"
       }
     }
-  }
+  },
+  "fileIsNotCorrect": "Fail ei ole korrektne.",
+  "dataSuccessfullyUploadedToApp": "Andmed edukalt rakendusse üles laetud.",
+  "fileIsDamaged": "Fail on kahjustatud.",
+  "exportBackupToFile": "Ekspordi varukoopia faili",
+  "importBackupFromFile": "Impordi varukoopia failist"
 }

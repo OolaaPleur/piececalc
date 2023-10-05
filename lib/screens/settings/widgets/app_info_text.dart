@@ -13,7 +13,7 @@ class AppInfoText extends StatelessWidget {
     final packageInfo = await PackageInfo.fromPlatform();
     final appName = packageInfo.appName;
     final version = packageInfo.version;
-    return '$appName : $version';
+    return '$appName: $version';
   }
 
   @override
