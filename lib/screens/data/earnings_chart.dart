@@ -21,7 +21,7 @@ class EarningsChart extends StatelessWidget {
     return BlocBuilder<CurrencyPickerCubit, CurrencyPickerState>(
       builder: (context, currencyPickerState) {
         return SideTitleWidget(
-          axisSide: meta.axisSide,
+          meta: meta,
           child: Text(
             '${meta.formattedValue}${currencyPickerState.currencyName['symbol']}',
           ),
@@ -130,7 +130,6 @@ class EarningsChart extends StatelessWidget {
                   barTouchData: BarTouchData(
                     enabled: false,
                     touchTooltipData: BarTouchTooltipData(
-                      tooltipBgColor: Colors.transparent,
                       tooltipPadding: EdgeInsets.zero,
                       tooltipMargin: 8,
                       getTooltipItem: (BarChartGroupData group,
@@ -163,7 +162,7 @@ class EarningsChart extends StatelessWidget {
                             fontSize: 14,
                           );
                           return SideTitleWidget(
-                            axisSide: meta.axisSide,
+                            meta: meta,
                             child: Text(
                               aggregatedData.keys.elementAt(index).toString(),
                               style: style,

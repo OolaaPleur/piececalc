@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/bloc/theme_bloc.dart';
 import '../../../theme/theme_constants.dart';
 /// Third page of intro.

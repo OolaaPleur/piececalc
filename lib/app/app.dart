@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:piececalc/screens/settings/backup/bloc/file_picking_bloc.dart';
 
 import '../data/repositories/settings_repository.dart';
+import '../l10n/app_localizations.dart';
 import '../screens/data/monthly_work_info_cubit.dart';
 import '../screens/home/bloc/home_bloc.dart';
 import '../screens/home/home.dart';

@@ -53,65 +53,60 @@ class WorkPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var matches = <Work>[];
-
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: textFieldHorizontalPadding,
         vertical: textFieldVerticalPadding,
       ),
-      child: TypeAheadFormField(
-        key: group.globalKey,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return context.l10n.pleaseEnterWorkName;
-          }
-          // Find the work that matches the text value of _typeAheadController
-          for (final work in state.workData) {
-            if (work.workName == group.typeAheadController.text) {
-              group.matchedWork = work;
-              return null;
-            }
-          }
-          if (group.matchedWork == null) {
-            return context.l10n.pleaseEnterValidWorkName;
-          }
-          return null;
-        },
-        textFieldConfiguration: TextFieldConfiguration(
-          decoration: InputDecoration(labelText: context.l10n.workName),
-          onTapOutside: (event) {
-            group.typeAheadFocusNode.unfocus();
-          },
-          focusNode: group.typeAheadFocusNode,
-          controller: group.typeAheadController,
-        ),
+      child: TypeAheadField<Work>(
         suggestionsCallback: (pattern) async {
-          context.read<TaskEditorBloc>();
-          matches = <Work>[...loadedList];
-
+          var matches = <Work>[...loadedList];
           final startsWithMatches = matches
               .where(
                 (s) => s.workName.toLowerCase().startsWith(pattern.toLowerCase()),
               )
               .toList();
-
           final containsMatches = matches
               .where(
                 (s) => s.workName.toLowerCase().contains(pattern.toLowerCase()),
               )
               .toList();
-
           startsWithMatches.addAll(containsMatches);
           return startsWithMatches.toSet().toList();
         },
-        itemBuilder: (context, suggestion) {
+        itemBuilder: (context, Work suggestion) {
           return ListTile(
             leading: const Icon(Icons.warehouse),
             title: Text(suggestion.workName),
           );
         },
-        onSuggestionSelected: suggestionPicked,
+        onSelected: suggestionPicked,
+        builder: (context, controller, focusNode) {
+          return TextFormField(
+            key: group.globalKey,
+            controller: controller,
+            focusNode: focusNode,
+            decoration: InputDecoration(labelText: context.l10n.workName),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return context.l10n.pleaseEnterWorkName;
+              }
+              for (final work in state.workData) {
+                if (work.workName == controller.text) {
+                  group.matchedWork = work;
+                  return null;
+                }
+              }
+              if (group.matchedWork == null) {
+                return context.l10n.pleaseEnterValidWorkName;
+              }
+              return null;
+            },
+            onTapOutside: (event) {
+              focusNode.unfocus();
+            },
+          );
+        },
       ),
     );
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:piececalc/l10n/l10n.dart';
 import 'package:piececalc/screens/settings/language_change/language_change_page.dart';
 
+import '../../../l10n/app_localizations.dart';
 import 'language_cubit.dart';
 
 /// A widget that provides an option to change the language.
