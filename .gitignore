@@ -46,3 +46,5 @@ app.*.map.json
 docs/** linguist-vendored
 web/** linguist-vendored
 android/** linguist-vendored
+# Firebase config (per-developer, not committed)
+google-services.json
